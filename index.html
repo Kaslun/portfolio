@@ -1,151 +1,487 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kasper Mork Lunde</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.19/tailwind.min.css" rel="stylesheet">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Kasper Mork Lunde | Gameplay Designer Portfolio</title>
+    <!-- Google Font: Cinzel for a clean, mysterious feel -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet" />
     <style>
-        .gradient-text {
-            background: linear-gradient(90deg, #4F46E5, #06B6D4);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        /* Define color palette from Logo: dark teal background (#102121) and beige accent (#C8C0A3) */
+        :root {
+            --bg-dark: #102121;
+            --accent: #C8C0A3;
+            --text-light: #E8E6E3;
+            --text-dark: #2C2A29;
+        }
+        /* Base styles */
+        body {
+            margin: 0;
+            font-family: 'Cinzel', serif;
+            color: var(--text-light);
+            background-color: var(--bg-dark);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        /* Header / Navbar */
+        header {
+            background-color: var(--bg-dark);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(-20px);
+            animation: fadeInDown 1s forwards;
+        }
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+        .nav .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--accent);
+        }
+        .nav ul {
+            list-style: none;
+            display: flex;
+            gap: 20px;
+        }
+        .nav ul li a {
+            position: relative;
+            color: var(--text-light);
+        }
+        .nav ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            background: var(--accent);
+            left: 0;
+            bottom: -5px;
+            transition: width 0.3s;
+        }
+        .nav ul li a:hover::after {
+            width: 100%;
+        }
+        /* Hero Section */
+        .hero {
+            background: url('https://via.placeholder.com/1200x600/102121/204242') center/cover no-repeat;
+            color: var(--text-light);
+            text-align: center;
+            padding: 120px 20px;
+            position: relative;
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+        }
+        .hero .content {
+            position: relative;
+            z-index: 1;
+            opacity: 0;
+            animation: fadeIn 1.5s 0.5s forwards;
+        }
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
+        }
+        .hero p {
+            font-size: 1.25rem;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
+        }
+        /* About Section */
+        section {
+            padding: 80px 0;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        .about {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 40px;
+        }
+        .about img {
+            max-width: 300px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+            transition: transform 0.3s;
+            border: 4px solid var(--accent);
+        }
+        .about img:hover {
+            transform: scale(1.05);
+        }
+        .about-text {
+            flex: 1;
+        }
+        .about-text h2 {
+            margin-bottom: 20px;
+            color: var(--accent);
+        }
+        /* Projects Section */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
         }
         .project-card {
-            transition: transform 0.2s ease-in-out;
+            background-color: var(--text-dark);
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            overflow: hidden;
+            transition: transform 0.3s;
+            position: relative;
         }
         .project-card:hover {
             transform: translateY(-5px);
         }
+        .project-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        .project-content {
+            padding: 20px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            color: var(--accent);
+        }
+        .project-card:hover .project-content {
+            opacity: 1;
+        }
+        .project-content h3 {
+            color: var(--text-light);
+        }
+        /* Resume Section */
+        .resume-timeline {
+            position: relative;
+            padding-left: 40px;
+        }
+        .resume-timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 15px;
+            width: 4px;
+            height: 100%;
+            background-color: var(--accent);
+            border-radius: 2px;
+        }
+        .timeline-item {
+            margin-bottom: 40px;
+            position: relative;
+            opacity: 0;
+            transform: translateX(-20px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+        .timeline-item.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -9px;
+            top: 5px;
+            background-color: var(--accent);
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+        }
+        .timeline-item h4 {
+            margin: 0 0 5px;
+            color: var(--accent);
+        }
+        .timeline-item p {
+            margin: 0;
+        }
+        /* Skills Section */
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
         .skill-pill {
-            animation: fadeIn 0.5s ease-in-out;
+            background-color: var(--accent);
+            color: var(--text-dark);
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .skill-pill::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255,255,255,0.2);
+            transform: skewX(-25deg);
+            transition: left 0.5s;
+        }
+        .skill-pill:hover::after {
+            left: 200%;
+        }
+        /* Contact Section */
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .contact-form input,
+        .contact-form textarea {
+            padding: 15px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+            width: 100%;
+            transition: border-color 0.3s;
+        }
+        .contact-form input:focus,
+        .contact-form textarea:focus {
+            border-color: var(--accent);
+            outline: none;
+        }
+        .contact-form button {
+            background-color: var(--accent);
+            color: var(--text-dark);
+            border: none;
+            padding: 15px;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        .contact-form button:hover {
+            background-color: #A9A48D;
+        }
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 20px 0;
+            background-color: var(--bg-dark);
+            margin-top: 80px;
+            font-size: 0.9rem;
+            color: var(--text-light);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 1s 0.5s forwards;
         }
         @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; }
+        }
+        @keyframes fadeInDown {
             to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @media (max-width: 768px) {
+            .about {
+                flex-direction: column;
+            }
         }
     </style>
 </head>
-<body class="bg-gray-900 text-gray-100">
-    <!-- Header/Hero Section -->
-    <header class="min-h-screen flex items-center justify-center relative overflow-hidden">
-        <div class="absolute inset-0 bg-gradient-to-br from-gray-900 to-gray-800"></div>
-        <div class="container mx-auto px-4 z-10">
-            <div class="text-center">
-                <h1 class="text-5xl md:text-7xl font-bold mb-6 gradient-text">Kasper Mork Lunde</h1>
-                <p class="text-xl md:text-2xl text-gray-400 mb-8">Game Designer and programmer</p>
-                <div class="flex justify-center gap-4">
-                    <a href="#projects" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg transition duration-300">View Projects</a>
-                    <a href="#contact" class="border border-indigo-600 text-indigo-600 px-6 py-3 rounded-lg hover:bg-indigo-600 hover:text-white transition duration-300">Contact Me</a>
-                </div>
-            </div>
+<body>
+
+    <!-- Header / Navbar -->
+    <header>
+        <div class="container nav">
+            <div class="logo">Kasper Mork Lunde</div>
+            <ul>
+                <li><a href="#about">About</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#resume">Resume</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
         </div>
     </header>
 
-    <!-- Skills Section -->
-    <section class="py-20 bg-gray-800">
-        <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold mb-12 text-center">Technical Skills</h2>
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
-                <div class="skill-pill bg-gray-700 p-4 rounded-lg text-center">
-                    <h3 class="font-bold mb-2">Game Engines</h3>
-                    <p class="text-gray-400">Unreal Engine 5</p>
-                    <p class="text-gray-400">Unity</p>
-                </div>
-                <div class="skill-pill bg-gray-700 p-4 rounded-lg text-center">
-                    <h3 class="font-bold mb-2">Languages</h3>
-                    <p class="text-gray-400">C++</p>
-                    <p class="text-gray-400">C#</p>
-                    <p class="text-gray-400">HTML/CSS</p>
-                </div>
-                <div class="skill-pill bg-gray-700 p-4 rounded-lg text-center">
-                    <h3 class="font-bold mb-2">Specialties</h3>
-                    <p class="text-gray-400">Game design</p>
-                    <p class="text-gray-400">Gameplay Systems</p>
-                    <p class="text-gray-400">AI Programming</p>
-                </div>
-                <div class="skill-pill bg-gray-700 p-4 rounded-lg text-center">
-                    <h3 class="font-bold mb-2">Tools</h3>
-                    <p class="text-gray-400">Figma</p>
-                    <p class="text-gray-400">Git/Fork</p>
-                    <p class="text-gray-400">Visual Studio</p>
-                </div>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container content">
+            <h1>Crafting Immersive Gameplay Experiences</h1>
+            <p>Gameplay Developer & Designer | Unity &amp; Unreal Expert</p>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container about">
+            <img src="https://media.licdn.com/dms/image/v2/D5603AQFG7q0FZYU80g/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1686263557284?e=1754524800&v=beta&t=g46VULvHfkM2MXcejcejqAfyrSb8Z8KXlOJrhdlp7kU" alt="Kasper Portrait" />
+            <div class="about-text">
+                <h2>About Me</h2>
+                <p>Creative and detail-oriented developer proficient in designing engaging and immersive simulations using Unity and Unreal Engine. Passionate about creating memorable experiences and adept at collaborating with cross-functional teams to bring concepts to life.</p>
+                <p>Based in Oslo, Norway</p>
             </div>
         </div>
     </section>
 
     <!-- Projects Section -->
-    <section id="projects" class="py-20">
-        <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold mb-12 text-center">Featured Projects</h2>
-            <div class="grid md:grid-cols-3 gap-8">
-                <div class="project-card bg-gray-800 rounded-xl overflow-hidden">
-                    <img src="project-images/Project1.png" alt="Project1" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2">Mosaic</h3>
-                        <h4 class="text font mb-1">Krillbite</h4>
-                        <p class="text-gray-400 mb-4">A mysterious narrative game, where you follow the repetitive and lonely life of an average commuter. Until one day, when strange things start happening.</p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="px-3 py-1 bg-indigo-900 rounded-full text-sm">Unity</span>
-                            <span class="px-3 py-1 bg-indigo-900 rounded-full text-sm">C#</span>
-                        </div>
+    <section id="projects">
+        <div class="container">
+            <h2>Featured Projects</h2>
+            <div class="projects-grid">
+                <!-- Project 1 -->
+                <div class="project-card">
+                    <img src="https://attensi.com/wp-content/uploads/Attensi-BEHAVIOUR-sims-1280x704.png.webp" alt="Attensi Simulation" /> 
+                    <div class="project-content">
+                        <h3>Attensi Training Simulations</h3>
+                        <p>Developed and designed simulation-based trainings using in-house tools. Collaborated with cross-functional teams to implement interactive scenarios using Unity.</p>
                     </div>
                 </div>
-                <div class="project-card bg-gray-800 rounded-xl overflow-hidden">
-                    <img src="project-images/Project2.png" alt="Project2" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2">Mørkredd</h3>
-                        <h4 class="text font mb-1">Hyper Games</h4>
-                        <p class="text-gray-400 mb-4">An innovative co-op puzzler, developed by Hyper Games and published by Aspyr.</p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="px-3 py-1 bg-indigo-900 rounded-full text-sm">Unity</span>
-                            <span class="px-3 py-1 bg-indigo-900 rounded-full text-sm">C#</span>
-                            <span class="px-3 py-1 bg-indigo-900 rounded-full text-sm">AI</span>
-                        </div>
-                    </div>
-                </div><div class="project-card bg-gray-800 rounded-xl overflow-hidden">
-                    <img src="project-images/Project3.png" alt="Project3" class="w-full h-48 object-cover">
-                    <div class="p-6">
-                        <h3 class="text-xl font-bold mb-2">Customer Star</h3>
-                        <h4 class="text font mb-1">Attensi</h4>
-                        <p class="text-gray-400 mb-4">A gamified training created by Attensi for Circle K used to teach new-joiners everyday tasks in a Circle K store.</p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="px-3 py-1 bg-indigo-900 rounded-full text-sm">Unity</span>
-                            <span class="px-3 py-1 bg-indigo-900 rounded-full text-sm">C#</span>
-                        </div>
+                <!-- Project 2 -->
+                <div class="project-card">
+                    <img src="https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1331910/header.jpg?t=1731674476" alt="Mørkredd" /> 
+                    <div class="project-content">
+                        <h3>Mørkredd</h3>
+                        <p>Gameplay programming and network implementation for the atmospheric game "Mørkredd". Focused on creating engaging enemy AI and multiplayer functionality.</p>
                     </div>
                 </div>
+                <!-- Project 3 -->
+                <div class="project-card">
+                    <img src="https://images.squarespace-cdn.com/content/v1/5c5c0d4994d71a50652eda86/1558080394431-A5SQRD3DO2XKM2AR25BI/intense.PNG?format=1000w" alt="Mosaic: BlipBlop" /> 
+                    <div class="project-content">
+                        <h3>Mosaic: BlipBlop</h3>
+                        <p>Contributed as gameplay programmer and QA for Mosaic: BlipBlop. Designed core mechanics and ensured seamless gameplay experiences.</p>
+                    </div>
+                </div>
+                <!-- Project 4 -->
+                <div class="project-card">
+                    <img src="https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/349270/header.jpg?t=1692101206" alt="Mosaic" /> 
+                    <div class="project-content">
+                        <h3>Mosaic</h3>
+                        <p>QA testing and gameplay enhancements for the puzzle game "Mosaic". Implemented feedback systems to refine game balance and player direction.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resume Section -->
+    <section id="resume">
+        <div class="container">
+            <h2>Resume</h2>
+            <div class="resume-timeline">
+                <!-- Timeline Item 1 -->
+                <div class="timeline-item">
+                    <h4>Gameplay Developer at Attensi (Nov 2021 - Present)</h4>
+                    <p>Oslo, Norway | Responsible for setting up, programming, and designing simulation-based trainings using in-house tools.</p>
+                </div>
+                <!-- Timeline Item 2 -->
+                <div class="timeline-item">
+                    <h4>Lecturer at Høyskolen Kristiania (Oct 2023 - Nov 2023)</h4>
+                    <p>Oslo, Norway | Taught Game Design B.Sc., focusing on Unreal Engine and offered design feedback to students.</p>
+                </div>
+                <!-- Timeline Item 3 -->
+                <div class="timeline-item">
+                    <h4>Gameplay Developer at Hyper Games (May 2019 - Dec 2019)</h4>
+                    <p>Oslo, Norway | Gameplay programmer on “Mørkredd”, “Mosaic: BlipBlop”, “Mosaic”; QA and network programming.</p>
+                </div>
+                <!-- Timeline Item 4 -->
+                <div class="timeline-item">
+                    <h4>Lecturer at Høyskolen Kristiania (Oct 2020 - Nov 2020)</h4>
+                    <p>Oslo, Norway | Lectured Game Design B.Sc. on mobile game design and provided design feedback.</p>
+                </div>
+                <!-- Timeline Item 5 -->
+                <div class="timeline-item">
+                    <h4>Bachelor of Science in Game Design (Graduated July 2018)</h4>
+                    <p>Høyskolen Kristiania, Oslo, Norway</p>
+                </div>
+            </div>
+
+            <h3>Skills</h3>
+            <div class="skills-list">
+                <div class="skill-pill">C#</div>
+                <div class="skill-pill">C++</div>
+                <div class="skill-pill">JavaScript</div>
+                <div class="skill-pill">Unity</div>
+                <div class="skill-pill">Unreal Engine 5</div>
+                <div class="skill-pill">JetBrains Rider</div>
             </div>
         </div>
     </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="py-20 bg-gray-800">
-        <div class="container mx-auto px-4">
-            <h2 class="text-3xl font-bold mb-12 text-center">Get In Touch</h2>
-            <div class="max-w-lg mx-auto">
-                <div class="flex flex-col gap-6">
-                    <div>
-                        <label class="block text-sm font-medium mb-2">Name</label>
-                        <input type="text" class="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-2">Email</label>
-                        <input type="email" class="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition">
-                    </div>
-                    <div>
-                        <label class="block text-sm font-medium mb-2">Message</label>
-                        <textarea rows="4" class="w-full px-4 py-2 rounded-lg bg-gray-700 border border-gray-600 focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500 outline-none transition"></textarea>
-                    </div>
-                    <button class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-3 rounded-lg transition duration-300">Send Message</button>
-                </div>
+    <section id="contact">
+        <div class="container">
+            <h2>Contact</h2>
+            <div class="contact-form">
+                <input type="text" placeholder="Your Name" required />
+                <input type="email" placeholder="Your Email" required />
+                <textarea rows="5" placeholder="Your Message" required></textarea>
+                <button type="submit">Send Message</button>
             </div>
+            <p style="text-align: center; margin-top: 20px;">Or reach out directly: <a href="mailto:kasperml@hotmail.com">kasperml@hotmail.com</a></p>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="py-8 text-center text-gray-400">
-        <p>&copy; 2024 Kasper Mork Lunde. All rights reserved.</p>
+    <footer>
+        <p>&copy; 2025 Kasper Mork Lunde. All Rights Reserved.</p>
+        <p>LinkedIn: <a href="https://linkedin.com/in/kasperlunde" target="_blank">linkedin.com/in/kasperlunde</a></p>
     </footer>
+
+    <script>
+        // Smooth scrolling for nav links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Intersection Observer to reveal sections
+        const sections = document.querySelectorAll('section, .timeline-item');
+        const observerOptions = {
+            threshold: 0.1
+        };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+    </script>
 </body>
 </html>
