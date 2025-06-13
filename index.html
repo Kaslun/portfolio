@@ -334,7 +334,7 @@
     <!-- Header / Navbar -->
     <header>
         <div class="container nav">
-            <img src="https://img.itch.zone/aW1nLzIxMzIyMjk3LnBuZw==/70x70%23/%2BjTGoh.png" alt="Kasper Mork Lunde" />
+            <img id="logo" src="https://img.itch.zone/aW1nLzIxMzIyMjk3LnBuZw==/70x70%23/%2BjTGoh.png" alt="Kasper Mork Lunde" />
             <ul>
                 <li><a href="#about">About</a></li>
                 <li><a href="#projects">Projects</a></li>
@@ -524,7 +524,6 @@
                     float dist = distance(uv, u_mouse);
                     float radius = 150.0;
                     float edge = 40.0;
-                    
                     float alpha = 0.6 * smoothstep(radius, radius + edge, dist);
 
                     gl_FragColor = vec4(0.0, 0.0, 0.0, alpha);
@@ -540,6 +539,13 @@
             requestAnimationFrame(animate);
         }
         animate();
+
+        const logo = document.getElementById('logo');
+        let flashlightEnabled = true;
+        logo.addEventListener('click', () => {
+            flashlightEnabled = !flashlightEnabled;
+            flCanvas.style.display = flashlightEnabled ? 'block' : 'none';
+        });
 
         window.addEventListener('mousemove', (e) => {
             uniforms.u_mouse.value.set(e.clientX, window.innerHeight - e.clientY);
