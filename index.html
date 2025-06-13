@@ -541,7 +541,7 @@
         animate();
 
         const logo = document.getElementById('logo');
-        let flashlightEnabled = true;
+        let flashlightEnabled = false;
         logo.addEventListener('click', () => {
             flashlightEnabled = !flashlightEnabled;
             flCanvas.style.display = flashlightEnabled ? 'block' : 'none';
