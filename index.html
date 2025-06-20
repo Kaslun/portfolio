@@ -256,6 +256,18 @@
         .skill-pill:hover::after {
             left: 200%;
         }
+        .resume-download {
+            display: inline-block;
+            background-color: var(--accent);
+            color: var(--text-dark);
+            padding: 10px 20px;
+            border-radius: 4px;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+        .resume-download:hover {
+            background-color: #A9A48D;
+        }
         /* Contact Section */
         .contact-form {
             max-width: 600px;
@@ -410,6 +422,7 @@
     <section id="resume">
         <div class="container">
             <h2>Resume</h2>
+            <p><a class="resume-download" href="resume.pdf" download>Download Resume</a></p>
             <div class="resume-timeline">
                 <!-- Timeline Item 1 -->
                 <div class="timeline-item">
