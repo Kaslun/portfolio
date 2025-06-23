@@ -341,6 +341,7 @@
             height: 100%;
             pointer-events: none;
             z-index: 2000;
+            display: none;
         }
     </style>
 </head>
@@ -540,6 +541,7 @@
 
         // Flashlight effect using Three.js
         const flCanvas = document.getElementById('flashlight-canvas');
+        flCanvas.style.display = 'none';
         const renderer = new THREE.WebGLRenderer({ canvas: flCanvas, alpha: true });
         renderer.setSize(window.innerWidth, window.innerHeight);
         const scene = new THREE.Scene();
@@ -577,7 +579,7 @@
         animate();
 
         const logo = document.getElementById('logo');
-        let flashlightEnabled = true;
+        let flashlightEnabled = false;
         logo.addEventListener('click', () => {
             flashlightEnabled = !flashlightEnabled;
             flCanvas.style.display = flashlightEnabled ? 'block' : 'none';
