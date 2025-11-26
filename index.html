@@ -1,623 +1,375 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Kasper Mork Lunde | Portfolio</title>
-    <!-- Google Font: Cinzel for a clean, mysterious feel -->
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&display=swap" rel="stylesheet" />
-    <style>
-        /* Define color palette from Logo: dark teal background (#102121) and beige accent (#C8C0A3) */
-        :root {
-            --bg-dark: #102121;
-            --accent: #C8C0A3;
-            --text-light: #E8E6E3;
-            --text-dark: #2C2A29;
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kasper Mork Lunde | Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'ui-sans-serif', 'system-ui'],
+          }
         }
-        /* Base styles */
-        body {
-            margin: 0;
-            font-family: 'Cinzel', serif;
-            color: var(--text-light);
-            background-color: var(--bg-dark);
-            line-height: 1.6;
-            overflow-x: hidden;
-        }
-        a {
-            color: var(--accent);
-            text-decoration: none;
-        }
-        a:hover {
-            text-decoration: underline;
-        }
-        /* Container */
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-        /* Header / Navbar */
-        header {
-            background-color: var(--bg-dark);
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-            opacity: 0;
-            transform: translateY(-20px);
-            animation: fadeInDown 1s forwards;
-        }
-        .nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 20px 0;
-        }
-        .nav .logo {
-            font-size: 1.5rem;
-            font-weight: bold;
-            color: var(--accent);
-        }
-        .nav ul {
-            list-style: none;
-            display: flex;
-            gap: 20px;
-        }
-        .nav ul li a {
-            position: relative;
-            color: var(--text-light);
-        }
-        .nav ul li a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            background: var(--accent);
-            left: 0;
-            bottom: -5px;
-            transition: width 0.3s;
-        }
-        .nav ul li a:hover::after {
-            width: 100%;
-        }
-        /* Hero Section */
-        .hero {
-            background: url('https://via.placeholder.com/1200x600/102121/204242') center/cover no-repeat;
-            color: var(--text-light);
-            text-align: center;
-            padding: 120px 20px;
-            position: relative;
-            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
-        }
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.6);
-        }
-        .hero .content {
-            position: relative;
-            z-index: 1;
-            opacity: 0;
-            animation: fadeIn 1.5s 0.5s forwards;
-        }
-        .hero h1 {
-            font-size: 3rem;
-            color: --text-light;
-            margin-bottom: 10px;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.6);
-        }
-        .hero p {
-            font-size: 1.25rem;
-            color: --text-light;
-            text-shadow: 1px 1px 3px rgba(0,0,0,0.6);
-        }
-        /* About Section */
-        section {
-            padding: 80px 0;
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 1s ease-out, transform 1s ease-out;
-        }
-        section.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        .about {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            gap: 40px;
-        }
-        .about img {
-            max-width: 300px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
-            transition: transform 0.3s;
-            border: 4px solid var(--accent);
-        }
-        .about img:hover {
-            transform: scale(1.05);
-        }
-        .about-text {
-            flex: 1;
-        }
-        .about-text h2 {
-            margin-bottom: 20px;
-            color: var(--accent);
-        }
-        /* Projects Carousel */
-        .carousel {
-            position: relative;
-            overflow-x: auto;
-        }
-        .carousel-track {
-            display: flex;
-            gap: 20px;
-            transition: transform 0.5s ease;
-            scroll-snap-type: x mandatory;
-            -ms-overflow-style: none;  /* IE and Edge */
-            scrollbar-width: none;  /* Firefox */
-        }
-        .carousel-track::-webkit-scrollbar {
-            display: none;  /* Chrome */
-        }
-        .carousel-item {
-            flex: 0 0 auto;
-            scroll-snap-align: start;
-        }
-        .project-card {
-            background-color: var(--text-dark);
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            overflow: hidden;
-            transition: transform 0.3s;
-            position: relative;
-            width: 250px;
-            height: 250px;
-        }
-        .project-card img {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        .project-content {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-            box-sizing: border-box;
-            color: var(--text-light);
-            background-color: rgba(0,0,0,0.6);
-            opacity: 0;
-            transition: opacity 0.3s;
-            text-align: center;
-        }
-        .project-card:hover .project-content {
-            opacity: 1;
-        }
-        .project-content h3 {
-            color: var(--text-light);
-        }
-        /* Resume Section */
-        .resume-timeline {
-            position: relative;
-            padding-left: 40px;
-        }
-        .resume-timeline::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 15px;
-            width: 4px;
-            height: 100%;
-            background-color: var(--accent);
-            border-radius: 2px;
-        }
-        .timeline-item {
-            margin-bottom: 40px;
-            position: relative;
-            opacity: 0;
-            transform: translateX(-20px);
-            transition: opacity 1s ease-out, transform 1s ease-out;
-        }
-        .timeline-item.visible {
-            opacity: 1;
-            transform: translateX(0);
-        }
-        .timeline-item::before {
-            content: '';
-            position: absolute;
-            /* Position bullet so it aligns with the timeline line */
-            left: -34px;
-            top: 5px;
-            background-color: var(--accent);
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-        }
-        .timeline-item h4 {
-            margin: 0 0 5px;
-            color: var(--accent);
-        }
-        .timeline-item p {
-            margin: 0;
-        }
-        /* Skills Section */
-        .skills-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        .skill-pill {
-            background-color: var(--accent);
-            color: var(--text-dark);
-            padding: 8px 12px;
-            border-radius: 20px;
-            font-size: 0.9rem;
-            position: relative;
-            overflow: hidden;
-        }
-        .skill-pill::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: rgba(255,255,255,0.2);
-            transform: skewX(-25deg);
-            transition: left 0.5s;
-        }
-        .skill-pill:hover::after {
-            left: 200%;
-        }
-        .resume-download {
-            display: inline-block;
-            background-color: var(--accent);
-            color: var(--text-dark);
-            padding: 10px 20px;
-            border-radius: 4px;
-            margin-top: 20px;
-            transition: background-color 0.3s;
-        }
-        .resume-download:hover {
-            background-color: #A9A48D;
-        }
-        /* Contact Section */
-        .contact-form {
-            max-width: 600px;
-            margin: 0 auto;
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-        .contact-form input,
-        .contact-form textarea {
-            padding: 15px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 1rem;
-            width: 100%;
-            transition: border-color 0.3s;
-        }
-        .contact-form input:focus,
-        .contact-form textarea:focus {
-            border-color: var(--accent);
-            outline: none;
-        }
-        .contact-form button {
-            background-color: var(--accent);
-            color: var(--text-dark);
-            border: none;
-            padding: 15px;
-            font-size: 1rem;
-            cursor: pointer;
-            border-radius: 4px;
-            transition: background-color 0.3s;
-        }
-        .contact-form button:hover {
-            background-color: #A9A48D;
-        }
-        /* Footer */
-        footer {
-            text-align: center;
-            padding: 20px 0;
-            background-color: var(--bg-dark);
-            margin-top: 80px;
-            font-size: 0.9rem;
-            color: var(--text-light);
-            opacity: 0;
-            transform: translateY(20px);
-            animation: fadeInUp 1s 0.5s forwards;
-        }
-        @keyframes fadeIn {
-            to { opacity: 1; }
-        }
-        @keyframes fadeInDown {
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes fadeInUp {
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @media (max-width: 768px) {
-            .about {
-                flex-direction: column;
-            }
-        }
-        /* Flashlight overlay */
-        #flashlight-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 2000;
-            display: none;
-        }
-    </style>
+      }
+    }
+  </script>
+  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js" crossorigin></script>
 </head>
-<body>
+<body class="bg-neutral-950 text-neutral-300 font-sans">
+  <div id="root"></div>
 
-    <!-- Header / Navbar -->
-    <header>
-        <div class="container nav">
-            <img id="logo" src="https://img.itch.zone/aW1nLzIxMzIyMjk3LnBuZw==/70x70%23/%2BjTGoh.png" alt="Kasper Mork Lunde" />
-            <ul>
-                <li><a href="#about">About</a></li>
-                <li><a href="#projects">Projects</a></li>
-                <li><a href="#resume">Resume</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </div>
-    </header>
+  <script type="text/babel">
+    const { useState } = React;
 
-    <!-- Hero Section -->
-    <section class="hero">
-        <div class="container content">
-            <h1>Kasper Mork Lunde</h1>
-            <p>Gameplay Developer & Designer | Unity &amp; Unreal Expert</p>
-        </div>
-    </section>
+    function Portfolio() {
+      const [activeSection, setActiveSection] = useState('about');
 
-    <!-- About Section -->
-    <section id="about">
-        <div class="container about">
-            <img src="https://media.licdn.com/dms/image/v2/D5603AQFG7q0FZYU80g/profile-displayphoto-shrink_800_800/profile-displayphoto-shrink_800_800/0/1686263557284?e=1754524800&v=beta&t=g46VULvHfkM2MXcejcejqAfyrSb8Z8KXlOJrhdlp7kU" alt="Kasper Portrait" />
-            <div class="about-text">
-                <h2>About Me</h2>
-                <p>Gameplay Developer & Technical Designer</p>
-                <p>I craft narrative-driven action experiences in Unreal Engine 5 and Unity, owning everything from combat feel to final polish. My focus is systems that challenge players’ thinking and linger long after the controller is down.</p>
-                <p>Currently based in Oslo, Norway</p>
+      return (
+        <div className="min-h-screen bg-neutral-950 text-neutral-300">
+          <nav className="fixed top-0 left-0 right-0 bg-neutral-950/90 backdrop-blur-sm z-50 border-b border-neutral-800/50">
+            <div className="max-w-4xl mx-auto px-8 py-5 flex justify-between items-center">
+              <span className="text-neutral-100 font-medium tracking-tight">Kasper Mork Lunde</span>
+              <div className="flex gap-10 text-sm">
+                {['about', 'work'].map(section => (
+                  <button
+                    key={section}
+                    onClick={() => setActiveSection(section)}
+                    className={`capitalize transition-colors ${activeSection === section ? 'text-neutral-100' : 'text-neutral-500 hover:text-neutral-300'}`}
+                  >
+                    {section}
+                  </button>
+                ))}
+              </div>
             </div>
-        </div>
-    </section>
+          </nav>
 
-    <!-- Projects Section -->
-        <section id="projects">
-        <div class="container">
-            <h2>Featured Projects</h2>
-            <div class="carousel">
-                <div class="carousel-track">
-                    <!-- Project 1 -->
-                    <a href="attensi.html" class="carousel-item">
-                        <div class="project-card">
-                            <img src="https://attensi.com/wp-content/uploads/Attensi-BEHAVIOUR-sims-1280x704.png.webp" alt="Attensi Simulation" />
-                            <div class="project-content">
-                                <h3>Attensi Training Simulations</h3>
-                                <p>Developed and designed simulation-based trainings using in-house tools. Collaborated with cross-functional teams to implement interactive scenarios using Unity.</p>
-                            </div>
+          <main className="max-w-4xl mx-auto px-8 pt-32 pb-28">
+            {activeSection === 'about' && (
+              <div className="space-y-20">
+                <header className="space-y-8">
+                  <p className="text-neutral-500 text-sm tracking-wide">Product & AI Designer</p>
+                  <h1 className="text-4xl md:text-5xl font-medium text-neutral-100 leading-tight tracking-tight">
+                    Designing AI tools that<br />
+                    make complex things simple
+                  </h1>
+                  <p className="text-lg text-neutral-400 leading-relaxed max-w-2xl">
+                    I build AI-powered experiences and educational games at Attensi. My work spans prompt engineering, conversation design, game taxonomy, and product thinking — turning complex AI capabilities into intuitive tools people actually want to use.
+                  </p>
+                  <p className="text-neutral-500">
+                    From Harstad, northern Norway. Based in Oslo.
+                  </p>
+                </header>
+
+                <section>
+                  <div className="flex items-center gap-6 mb-8">
+                    <h2 className="text-lg font-medium text-neutral-100">What I do</h2>
+                    <div className="flex-1 h-px bg-neutral-700"></div>
+                  </div>
+                  <div className="grid md:grid-cols-3 gap-8">
+                    <div className="space-y-3">
+                      <p className="text-neutral-100 font-medium">AI & Data Design</p>
+                      <p className="text-neutral-400 text-sm leading-relaxed">Prompt engineering, LLM orchestration, conversation design, content taxonomy, making AI output predictable and trustworthy at scale</p>
+                    </div>
+                    <div className="space-y-3">
+                      <p className="text-neutral-100 font-medium">Game Development</p>
+                      <p className="text-neutral-400 text-sm leading-relaxed">Unity, C#, gameplay systems, simulation design, game taxonomy. Shipped award-winning titles including Mosaic</p>
+                    </div>
+                    <div className="space-y-3">
+                      <p className="text-neutral-100 font-medium">Product Design</p>
+                      <p className="text-neutral-400 text-sm leading-relaxed">End-to-end product thinking, UX flows, scaling content pipelines across 50+ languages and 150+ countries</p>
+                    </div>
+                  </div>
+                </section>
+
+                <section>
+                  <div className="flex items-center gap-6 mb-6">
+                    <h2 className="text-lg font-medium text-neutral-100">Recognition</h2>
+                    <div className="flex-1 h-px bg-neutral-700"></div>
+                  </div>
+                  <div className="space-y-4 text-sm">
+                    <div className="flex justify-between items-baseline border-b border-neutral-800/50 pb-4">
+                      <span className="text-neutral-200">Jury's Special Mention</span>
+                      <span className="text-neutral-500">Nordic Game Awards · Mosaic</span>
+                    </div>
+                    <div className="flex justify-between items-baseline border-b border-neutral-800/50 pb-4">
+                      <span className="text-neutral-200">GOTY – Small Screen</span>
+                      <span className="text-neutral-500">Spillprisen · Mosaic</span>
+                    </div>
+                    <div className="flex justify-between items-baseline border-b border-neutral-800/50 pb-4">
+                      <span className="text-neutral-200">Best Visual Style</span>
+                      <span className="text-neutral-500">Spillprisen · Mosaic</span>
+                    </div>
+                    <div className="flex justify-between items-baseline">
+                      <span className="text-neutral-200">Best XR Prototype</span>
+                      <span className="text-neutral-500">VRINN · Resonance</span>
+                    </div>
+                  </div>
+                </section>
+
+                <section className="grid md:grid-cols-2 gap-12">
+                  <div>
+                    <div className="flex items-center gap-6 mb-4">
+                      <h2 className="text-lg font-medium text-neutral-100">Tools</h2>
+                      <div className="flex-1 h-px bg-neutral-700"></div>
+                    </div>
+                    <p className="text-neutral-300">Unity, C#, Flowise, Figma, Blender, Prompt Engineering</p>
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-6 mb-4">
+                      <h2 className="text-lg font-medium text-neutral-100">Education</h2>
+                      <div className="flex-1 h-px bg-neutral-700"></div>
+                    </div>
+                    <p className="text-neutral-200">B.Sc. Game & Interactive Media Design</p>
+                    <p className="text-neutral-500 text-sm mt-1">Westerdals Oslo ACT · 2015–2018</p>
+                  </div>
+                </section>
+
+                <section className="pt-12 border-t border-neutral-800/50">
+                  <div className="flex items-center gap-6 mb-6">
+                    <h2 className="text-lg font-medium text-neutral-100">Contact</h2>
+                    <div className="flex-1 h-px bg-neutral-700"></div>
+                  </div>
+                  <div className="flex flex-wrap gap-8 text-sm">
+                    <a href="mailto:kasperml@hotmail.com" className="text-neutral-200 hover:text-white transition-colors">kasperml@hotmail.com</a>
+                    <span className="text-neutral-400">+47 970 96 782</span>
+                    <a href="https://linkedin.com/in/kasperlunde" className="text-neutral-200 hover:text-white transition-colors">LinkedIn</a>
+                  </div>
+                </section>
+              </div>
+            )}
+
+            {activeSection === 'work' && (
+              <div className="space-y-24">
+                <header>
+                  <p className="text-neutral-500 text-sm tracking-wide mb-4">Selected Work</p>
+                  <h1 className="text-4xl font-medium text-neutral-100 tracking-tight">Projects</h1>
+                </header>
+
+                <section className="space-y-20">
+                  <div className="flex items-center gap-6 mb-4">
+                    <h2 className="text-lg font-medium text-neutral-100">Professional Work</h2>
+                    <div className="flex-1 h-px bg-neutral-700"></div>
+                  </div>
+
+                  <article className="space-y-8">
+                    <div>
+                      <p className="text-neutral-500 text-sm mb-2">Attensi · 2025</p>
+                      <h3 className="text-2xl font-medium text-neutral-100 tracking-tight">AI-Powered Content Generation</h3>
+                      <p className="text-neutral-400 mt-3 leading-relaxed">
+                        Designing AI systems that help content creators generate training materials and educational dialogues at scale — making complex AI capabilities feel simple and intuitive.
+                      </p>
+                    </div>
+
+                    <div className="bg-neutral-900 rounded-xl p-6 border border-neutral-800">
+                      <p className="text-sm text-neutral-200 mb-4">The challenge</p>
+                      <p className="text-neutral-400 text-sm leading-relaxed">
+                        Creating quality training content traditionally takes significant time and expertise. The goal was to build AI-powered tools that dramatically speed up content creation while maintaining high standards — output that's predictable, on-brand, and follows established best practices.
+                      </p>
+                    </div>
+
+                    <div className="space-y-6">
+                      <p className="text-sm text-neutral-200">My contribution</p>
+                      <div className="grid md:grid-cols-2 gap-6 text-sm">
+                        <div className="space-y-2">
+                          <p className="text-neutral-300">Prompt Engineering</p>
+                          <p className="text-neutral-500">Designing prompts and variable structures that produce consistent, trustworthy output aligned with quality standards.</p>
                         </div>
-                    </a>
-                    <!-- Project 2 -->
-                    <a href="morkredd.html" class="carousel-item">
-                        <div class="project-card">
-                            <img src="https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/1331910/header.jpg?t=1731674476" alt="Mørkredd" />
-                            <div class="project-content">
-                                <h3>Mørkredd</h3>
-                                <p>Gameplay programming and network implementation for the atmospheric game "Mørkredd". Focused on creating engaging enemy AI and multiplayer functionality.</p>
-                            </div>
+                        <div className="space-y-2">
+                          <p className="text-neutral-300">Conversation Design</p>
+                          <p className="text-neutral-500">Creating frameworks for lifelike educational dialogues — natural flow, appropriate tone, and effective teaching moments.</p>
                         </div>
-                    </a>
-                    <!-- Project 3 -->
-                    <a href="blipblop.html" class="carousel-item">
-                        <div class="project-card">
-                            <img src="https://images.squarespace-cdn.com/content/v1/5c5c0d4994d71a50652eda86/1558080394431-A5SQRD3DO2XKM2AR25BI/intense.PNG?format=1000w" alt="Mosaic: BlipBlop" />
-                            <div class="project-content">
-                                <h3>Mosaic: BlipBlop</h3>
-                                <p>Contributed as gameplay programmer and QA for Mosaic: BlipBlop. Designed core mechanics and ensured seamless gameplay experiences.</p>
-                            </div>
+                        <div className="space-y-2">
+                          <p className="text-neutral-300">AI System Architecture</p>
+                          <p className="text-neutral-500">Building modular AI workflows using visual orchestration tools to handle complex content generation tasks.</p>
                         </div>
-                    </a>
-                    <!-- Project 4 -->
-                    <a href="mosaic.html" class="carousel-item">
-                        <div class="project-card">
-                            <img src="https://shared.cloudflare.steamstatic.com/store_item_assets/steam/apps/349270/header.jpg?t=1692101206" alt="Mosaic" />
-                            <div class="project-content">
-                                <h3>Mosaic</h3>
-                                <p>QA testing and gameplay enhancements for the puzzle game "Mosaic". Implemented feedback systems to refine game balance and player direction.</p>
-                            </div>
+                        <div className="space-y-2">
+                          <p className="text-neutral-300">UX for AI Tools</p>
+                          <p className="text-neutral-500">Input on user flows that make powerful AI capabilities accessible to non-technical content creators.</p>
                         </div>
-                    </a>
-                </div>
-            </div>
+                      </div>
+                    </div>
+
+                    <div className="text-sm pt-4">
+                      <p className="text-neutral-500 mb-1">Outcome</p>
+                      <p className="text-neutral-300">Significantly faster content creation while maintaining quality and brand consistency</p>
+                    </div>
+                  </article>
+
+                  <article className="space-y-8">
+                    <div>
+                      <div className="flex items-start justify-between gap-4">
+                        <div>
+                          <p className="text-neutral-500 text-sm mb-2">Attensi · 2021–2025</p>
+                          <h3 className="text-2xl font-medium text-neutral-100 tracking-tight">Attensi ShopSim & Operations</h3>
+                        </div>
+                        <a href="https://attensi.com/products/impact/" target="_blank" rel="noopener noreferrer" className="text-neutral-500 text-sm hover:text-neutral-300 transition-colors whitespace-nowrap">attensi.com →</a>
+                      </div>
+                      <p className="text-neutral-400 mt-3 leading-relaxed">
+                        Gameplay Designer on Attensi's flagship retail training simulations — full 3D experiences that train everyday workflows and soft skills in complex retail environments. These simulations power training for major global brands.
+                      </p>
+                    </div>
+
+                    <div className="bg-neutral-900 rounded-xl p-6 border border-neutral-800">
+                      <p className="text-sm text-neutral-200 mb-4">Scale & Impact</p>
+                      <p className="text-neutral-400 text-sm leading-relaxed">
+                        Attensi's simulation training reaches users across 150+ countries in 50+ languages. Major retail clients include Circle K (85,000+ trained associates globally), Starbucks, Spar, and other industry leaders. The platform is built on Unity and powered by AI.
+                      </p>
+                    </div>
+
+                    <div className="grid grid-cols-3 gap-6 text-sm">
+                      <div>
+                        <p className="text-neutral-500 mb-1">Performance</p>
+                        <p className="text-neutral-100 text-lg">3× faster</p>
+                      </div>
+                      <div>
+                        <p className="text-neutral-500 mb-1">Pipeline</p>
+                        <p className="text-neutral-100 text-lg">50% faster</p>
+                      </div>
+                      <div>
+                        <p className="text-neutral-500 mb-1">Global Reach</p>
+                        <p className="text-neutral-100 text-lg">50+ languages</p>
+                      </div>
+                    </div>
+
+                    <div className="space-y-6">
+                      <p className="text-sm text-neutral-200">My contribution</p>
+                      <ul className="space-y-3 text-sm text-neutral-400">
+                        <li className="flex gap-3">
+                          <span className="text-neutral-600">—</span>
+                          <span>Gameplay design for every ShopSim and Operations product</span>
+                        </li>
+                        <li className="flex gap-3">
+                          <span className="text-neutral-600">—</span>
+                          <span>Product optimization achieving 3× performance gains</span>
+                        </li>
+                        <li className="flex gap-3">
+                          <span className="text-neutral-600">—</span>
+                          <span>Content pipeline development with Art and CSIM teams</span>
+                        </li>
+                        <li className="flex gap-3">
+                          <span className="text-neutral-600">—</span>
+                          <span>Internationalization and multi-language support systems</span>
+                        </li>
+                        <li className="flex gap-3">
+                          <span className="text-neutral-600">—</span>
+                          <span>Dialogue writing for Process simulations</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </article>
+                </section>
+
+                <section className="space-y-12">
+                  <div className="flex items-center gap-6 mb-4">
+                    <h2 className="text-lg font-medium text-neutral-100">Shipped Titles</h2>
+                    <div className="flex-1 h-px bg-neutral-700"></div>
+                  </div>
+
+                  <article className="space-y-6">
+                    <div>
+                      <div className="flex items-start justify-between gap-4">
+                        <div>
+                          <p className="text-neutral-500 text-sm mb-2">Hyper Games & Krillbite · 2019</p>
+                          <h3 className="text-2xl font-medium text-neutral-100 tracking-tight">Mosaic</h3>
+                        </div>
+                        <a href="https://store.steampowered.com/app/349270/Mosaic/" target="_blank" rel="noopener noreferrer" className="text-neutral-500 text-sm hover:text-neutral-300 transition-colors whitespace-nowrap">Steam →</a>
+                      </div>
+                      <p className="text-neutral-400 mt-3 leading-relaxed">
+                        Gameplay Programmer on the award-winning narrative game about modern life and isolation. Also worked on Mosaic:BlipBlop and Mørkredd.
+                      </p>
+                    </div>
+
+                    <div className="flex flex-wrap gap-3 text-xs">
+                      <span className="bg-neutral-800 text-neutral-300 px-3 py-1.5 rounded-full">Jury's Special Mention — Nordic Game Awards</span>
+                      <span className="bg-neutral-800 text-neutral-300 px-3 py-1.5 rounded-full">GOTY Small Screen — Spillprisen</span>
+                      <span className="bg-neutral-800 text-neutral-300 px-3 py-1.5 rounded-full">Best Visual Style — Spillprisen</span>
+                    </div>
+                  </article>
+
+                  <div className="grid md:grid-cols-2 gap-12">
+                    <article className="space-y-3">
+                      <p className="text-neutral-500 text-sm">2021</p>
+                      <h3 className="text-lg text-neutral-100">Resonance</h3>
+                      <p className="text-neutral-400 text-sm leading-relaxed">VR relaxation experience. Best XR Prototype/Demo — VRINN 2021.</p>
+                    </article>
+                    
+                    <article className="space-y-3">
+                      <p className="text-neutral-500 text-sm">NRK · 2019</p>
+                      <h3 className="text-lg text-neutral-100">Valgspillet 2019</h3>
+                      <p className="text-neutral-400 text-sm leading-relaxed">Gaming meets national television — city-building during the Norwegian elections.</p>
+                    </article>
+                  </div>
+                </section>
+
+                <section className="space-y-12">
+                  <div className="flex items-center gap-6 mb-4">
+                    <h2 className="text-lg font-medium text-neutral-100">Personal Projects</h2>
+                    <div className="flex-1 h-px bg-neutral-700"></div>
+                  </div>
+
+                  <div className="grid md:grid-cols-2 gap-10">
+                    <article className="space-y-4">
+                      <div className="flex items-start justify-between gap-4">
+                        <h3 className="text-lg text-neutral-100">Bartleby Consultant Calculators INC</h3>
+                        <a href="https://puffinstudios.itch.io/bartleby-consultant-calculators-inc" target="_blank" rel="noopener noreferrer" className="text-neutral-500 text-sm hover:text-neutral-300 transition-colors whitespace-nowrap">itch.io →</a>
+                      </div>
+                      <p className="text-neutral-400 text-sm leading-relaxed">
+                        A retro-inspired puzzle-adventure where navigating an old-school computer system is your only way out. Explore directories, unlock commands through mini-games, and piece together the system's secrets to finally go home.
+                      </p>
+                      <p className="text-neutral-500 text-xs">Game Design, Gameplay Programming · with Vetle Bjørn Berlin</p>
+                    </article>
+
+                    <article className="space-y-4">
+                      <div className="flex items-start justify-between gap-4">
+                        <h3 className="text-lg text-neutral-100">MacGyver Simulator</h3>
+                        <a href="https://puffinstudios.itch.io/macgyver-simulator" target="_blank" rel="noopener noreferrer" className="text-neutral-500 text-sm hover:text-neutral-300 transition-colors whitespace-nowrap">itch.io →</a>
+                      </div>
+                      <p className="text-neutral-400 text-sm leading-relaxed">
+                        "It's amazing what you can do with duct tape." A simulation game submitted to SCRUB JAM.
+                      </p>
+                      <p className="text-neutral-500 text-xs">Game Jam Entry</p>
+                    </article>
+                  </div>
+                </section>
+
+                <section className="space-y-12">
+                  <div className="flex items-center gap-6 mb-4">
+                    <h2 className="text-lg font-medium text-neutral-100">Other Experience</h2>
+                    <div className="flex-1 h-px bg-neutral-700"></div>
+                  </div>
+
+                  <article className="space-y-3">
+                    <p className="text-neutral-500 text-sm">Kristiania University College · 2021–2022</p>
+                    <h3 className="text-lg text-neutral-100">Lecturer, Game Design B.Sc.</h3>
+                    <p className="text-neutral-400 text-sm leading-relaxed">Teaching game development fundamentals and mentoring student projects.</p>
+                  </article>
+                </section>
+
+                <section className="pt-12 border-t border-neutral-800/50">
+                  <p className="text-neutral-400 mb-4">Interested in working together?</p>
+                  <div className="flex gap-8 text-sm">
+                    <a href="mailto:kasperml@hotmail.com" className="text-neutral-200 hover:text-white transition-colors">kasperml@hotmail.com</a>
+                    <a href="https://linkedin.com/in/kasperlunde" className="text-neutral-200 hover:text-white transition-colors">LinkedIn</a>
+                  </div>
+                </section>
+              </div>
+            )}
+          </main>
         </div>
-    </section>
+      );
+    }
 
-    <!-- Resume Section -->
-    <section id="resume">
-        <div class="container">
-            <h2>Resume</h2>
-            <p><a class="resume-download" href="Kasper_CV_2025.pdf" download>Download Resume</a></p>
-            <div class="resume-timeline">
-                <!-- Timeline Item 1 -->
-                <div class="timeline-item">
-                    <h4>Gameplay Developer at Attensi (Nov 2021 - Present)</h4>
-                    <p>Oslo, Norway | Responsible for setting up, programming, and designing simulation-based trainings using in-house tools.</p>
-                </div>
-                <!-- Timeline Item 2 -->
-                <div class="timeline-item">
-                    <h4>Lecturer at Høyskolen Kristiania (Oct 2023 - Nov 2023)</h4>
-                    <p>Oslo, Norway | Taught Game Design B.Sc., focusing on Unreal Engine and offered design feedback to students.</p>
-                </div>
-                <!-- Timeline Item 3 -->
-                <div class="timeline-item">
-                    <h4>Gameplay Developer at Hyper Games (May 2019 - Dec 2019)</h4>
-                    <p>Oslo, Norway | Gameplay programmer on “Mørkredd”, “Mosaic: BlipBlop”, “Mosaic”; QA and network programming.</p>
-                </div>
-                <!-- Timeline Item 4 -->
-                <div class="timeline-item">
-                    <h4>Lecturer at Høyskolen Kristiania (Oct 2020 - Nov 2020)</h4>
-                    <p>Oslo, Norway | Lectured Game Design B.Sc. on mobile game design and provided design feedback.</p>
-                </div>
-                <!-- Timeline Item 5 -->
-                <div class="timeline-item">
-                    <h4>Bachelor of Science in Game Design (Graduated July 2018)</h4>
-                    <p>Høyskolen Kristiania, Oslo, Norway</p>
-                </div>
-            </div>
-
-            <h3>Skills</h3>
-            <div class="skills-list">
-                <div class="skill-pill">C#</div>
-                <div class="skill-pill">C++</div>
-                <div class="skill-pill">JavaScript</div>
-                <div class="skill-pill">Unity</div>
-                <div class="skill-pill">Unreal Engine 5</div>
-                <div class="skill-pill">JetBrains Rider</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact Section -->
-    <section id="contact">
-        <div class="container">
-            <h2>Contact</h2>
-            <div class="contact-form">
-                <input type="text" placeholder="Your Name" required />
-                <input type="email" placeholder="Your Email" required />
-                <textarea rows="5" placeholder="Your Message" required></textarea>
-                <button type="submit">Send Message</button>
-            </div>
-            <p style="text-align: center; margin-top: 20px;">Or reach out directly: <a href="mailto:kasperml@hotmail.com">kasperml@hotmail.com</a></p>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2025 Kasper Mork Lunde. All Rights Reserved.</p>
-        <p>LinkedIn: <a href="https://linkedin.com/in/kasperlunde" target="_blank">linkedin.com/in/kasperlunde</a></p>
-    </footer>
-
-    <!-- Canvas for flashlight effect -->
-    <canvas id="flashlight-canvas"></canvas>
-
-    <!-- Three.js library for flashlight -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r134/three.min.js"></script>
-
-    <script>
-        // Smooth scrolling for nav links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-
-        // Intersection Observer to reveal sections
-        const sections = document.querySelectorAll('section, .timeline-item');
-        const observerOptions = {
-            threshold: 0.1
-        };
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                }
-            });
-        }, observerOptions);
-
-        sections.forEach(section => {
-            observer.observe(section);
-        });
-
-        // Simple carousel logic
-        const track = document.querySelector('.carousel-track');
-        let currentSlide = 0;
-        setInterval(() => {
-            currentSlide = (currentSlide + 1) % track.children.length;
-            track.style.transform = `translateX(-${currentSlide * 100}%)`;
-        }, 5000);
-
-        // Flashlight effect using Three.js
-        const flCanvas = document.getElementById('flashlight-canvas');
-        flCanvas.style.display = 'none';
-        const renderer = new THREE.WebGLRenderer({ canvas: flCanvas, alpha: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        const scene = new THREE.Scene();
-        const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
-        const uniforms = {
-            u_mouse: { value: new THREE.Vector2(-1000, -1000) },
-            u_resolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) }
-        };
-        const material = new THREE.ShaderMaterial({
-            uniforms: uniforms,
-            transparent: true,
-            vertexShader: 'void main() { gl_Position = vec4(position, 1.0); }',
-            fragmentShader: `
-                uniform vec2 u_mouse;
-                uniform vec2 u_resolution;
-                void main() {
-                    vec2 uv = gl_FragCoord.xy;
-                    float dist = distance(uv, u_mouse);
-                    float radius = 150.0;
-                    float edge = 40.0;
-                    float alpha = 0.6 * smoothstep(radius, radius + edge, dist);
-
-                    gl_FragColor = vec4(0.0, 0.0, 0.0, alpha);
-                }
-            `
-        });
-        const plane = new THREE.PlaneGeometry(2, 2);
-        const mesh = new THREE.Mesh(plane, material);
-        scene.add(mesh);
-
-        function animate() {
-            renderer.render(scene, camera);
-            requestAnimationFrame(animate);
-        }
-        animate();
-
-        const logo = document.getElementById('logo');
-        let flashlightEnabled = false;
-        logo.addEventListener('click', () => {
-            flashlightEnabled = !flashlightEnabled;
-            flCanvas.style.display = flashlightEnabled ? 'block' : 'none';
-        });
-
-        window.addEventListener('mousemove', (e) => {
-            uniforms.u_mouse.value.set(e.clientX, window.innerHeight - e.clientY);
-        });
-
-        window.addEventListener('resize', () => {
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            uniforms.u_resolution.value.set(window.innerWidth, window.innerHeight);
-        });
-    </script>
+    const rootElement = document.getElementById('root');
+    const root = ReactDOM.createRoot(rootElement);
+    root.render(<Portfolio />);
+  </script>
 </body>
 </html>
