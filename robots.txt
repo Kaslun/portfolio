@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /portfolio-design/
+
+Sitemap: https://kaslun.github.io/portfolio/sitemap.xml
