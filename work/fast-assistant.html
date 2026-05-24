@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>FAST Assistant — Kasper Mork Lunde</title>
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+<link rel="stylesheet" href="/styles.css" />
+
+<script>
+  // Theme: localStorage > system preference > dark. Set before first paint.
+  (function () {
+    try {
+      var saved = localStorage.getItem("kml-theme");
+      var prefersLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
+      var theme = saved || (prefersLight ? "light" : "dark");
+      document.documentElement.setAttribute("data-theme", theme);
+    } catch (e) {
+      document.documentElement.setAttribute("data-theme", "dark");
+    }
+  })();
+</script>
+</head>
+<body>
+
+  <!-- Theme toggle: persistent, top-right -->
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme">
+    <span class="dot" aria-hidden="true"></span>
+    <span class="label" id="themeLabel">Light</span>
+  </button>
+
+  <main class="case">
+
+    <!-- Atmospheric blur in hero area -->
+    <div class="case-bg" aria-hidden="true"></div>
+
+    <div class="case-shell">
+
+      <!-- back to work, top-left -->
+      <a class="back-link" href="/index.html#work">
+        <span class="arr-back">←</span>
+        <span>Back to work</span>
+      </a>
+
+      <!-- ===== Header block ===== -->
+      <header class="case-header">
+        <span class="case-num" aria-hidden="true">02</span>
+        <h1 class="case-title">Designing AI personality without writing prompts</h1>
+        <p class="case-frame">
+          Product designer for FAST Assistant at Attensi, the AI agent that lives inside customers' learning journeys in Attensi Engage. Customers configure the assistant's personality through sliders, not prompts. The reason that matters is the case study.
+        </p>
+      </header>
+
+      <!-- ===== § The default approach is wrong ===== -->
+      <section class="case-section">
+        <span class="case-eyebrow">— The default approach is wrong</span>
+        <h2 class="case-h2">The default approach is wrong</h2>
+        <div class="case-prose">
+          <p>
+            The obvious way to let customers customize an AI assistant is to give them a prompt editor. That's what most tools do. A textarea, a save button, a system prompt that the customer writes.
+          </p>
+          <p>
+            It seems empowering. It's actually the opposite. The customer is a brand manager or an L&amp;D lead, not a prompt engineer. They write what they think they want the assistant to do, the model interprets it in ways they didn't expect, the assistant behaves inconsistently across users, and when something goes wrong the customer has no idea why. Token counts balloon. Latency rises. The system gets harder to debug for everyone, including us.
+          </p>
+          <p>
+            We took the opposite approach. Customers don't write prompts. They configure variables.
+          </p>
+        </div>
+      </section>
+
+      <!-- ===== § How the sliders work ===== -->
+      <section class="case-section">
+        <span class="case-eyebrow">— How the sliders work</span>
+        <h2 class="case-h2">How the sliders work</h2>
+        <div class="case-prose">
+          <p>
+            The super-user interface gives the customer five personality sliders, each 1-5:
+          </p>
+        </div>
+
+        <ul class="case-list">
+          <li><span>Proactiveness</span></li>
+          <li><span>Seriousness</span></li>
+          <li><span>Creativity</span></li>
+          <li><span>Positivity</span></li>
+          <li><span>Response length</span></li>
+        </ul>
+
+        <div class="case-prose">
+          <p>
+            There's also a free-text field for special instructions (tone of voice, rules around mentioning competitors, brand guidelines), and a toggle to limit the assistant's use of general training data. The toggle is the one most customers care about most, for reasons I'll get to.
+          </p>
+          <p>
+            The customer never sees a prompt. They see plain-language controls. "More proactive" is a slider, not a sentence they have to write. The choices are constrained but expressive enough to produce meaningfully different assistants.
+          </p>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- ===== Reserved slot: slider UI screenshot ===== -->
+    <div class="case-shell-wide">
+      <figure class="case-placeholder" aria-label="Slider UI placeholder" style="min-height: 300px;">
+        <span class="case-placeholder-label">— Slider UI (placeholder)</span>
+        <span class="case-placeholder-hint">
+          The super-user surface: five 1–5 personality sliders, the special-instructions field, the limit-general-knowledge toggle.
+        </span>
+      </figure>
+    </div>
+
+    <div class="case-shell">
+
+      <!-- ===== § What happens underneath ===== -->
+      <section class="case-section">
+        <span class="case-eyebrow">— What happens underneath</span>
+        <h2 class="case-h2">What happens underneath</h2>
+        <div class="case-prose">
+          <p>
+            All five slider values, the special instructions, and the toggle state get sent to Flowise, where the prompt gets assembled programmatically. Each slider value maps to specific prompt fragments designed by people who do prompt engineering for a living. The fragments combine cleanly because they were written to combine. The final prompt is shorter than what a customer would have written, more consistent than what a model would have inferred, and predictable enough that we can reason about its behavior across thousands of conversations.
+          </p>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- ===== Pull quote (breaks out wider than the body column) ===== -->
+    <div class="case-shell-wide">
+      <blockquote class="case-pullquote">
+        Prompts aren't a UI. They're an implementation detail that needs a designed surface in front of them.
+      </blockquote>
+    </div>
+
+    <div class="case-shell">
+
+      <section class="case-section" style="margin-top: 0;">
+        <div class="case-prose">
+          <p>
+            The free-text special instructions go through the same flow, with input moderation before they're appended to the assembled prompt. Even there, the customer's text is constrained to the role of additional context, not a system prompt rewrite.
+          </p>
+          <p>
+            The token savings matter. Each unnecessary token costs money on every call, adds latency, and increases the surface area for the model to drift. The slider-to-prompt mapping is engineered to keep prompts lean. Each variable's contribution is the minimum text needed to shift behavior in the intended direction, not a paragraph of guidance.
+          </p>
+        </div>
+      </section>
+
+      <!-- ===== § The hallucination problem ===== -->
+      <section class="case-section">
+        <span class="case-eyebrow">— The hallucination problem</span>
+        <h2 class="case-h2">The hallucination problem</h2>
+        <div class="case-prose">
+          <p>
+            The toggle that limits general knowledge is the most important feature in the product, and the hardest to get right.
+          </p>
+          <p>
+            Attensi is a learning platform. If the assistant tells a trainee that a piece of equipment has a function it doesn't have, or tells a staff member that a product contains an ingredient it doesn't contain, that's a serious failure. The assistant must answer from the customer's uploaded knowledge documents, not from the model's training data.
+          </p>
+          <p>
+            The implementation uses retrieval against the customer's upserted documentation, with the prompt engineered to defer to that source. When the assistant doesn't have an answer in the documents, it says so explicitly: "I don't know about X, but I can tell you about Y." The fallback to known-good adjacent information is more useful than a refusal, and much more useful than a hallucination dressed up as fact.
+          </p>
+          <p>
+            Restricting a large language model from using its general knowledge is harder than it sounds. The model wants to answer. It's been trained to be helpful. Teaching it to say "I don't know" when it absolutely could generate something plausible required careful prompt design and several rounds of red-team testing. The system has been stress-tested with role-play prompts, prompt-injection attempts, and various tricks to get the assistant to leak its system prompt or hallucinate confident answers. The assistant held.
+          </p>
+        </div>
+      </section>
+
+      <!-- ===== § What I do, specifically ===== -->
+      <section class="case-section">
+        <span class="case-eyebrow">— What I do, specifically</span>
+        <h2 class="case-h2">What I do, specifically</h2>
+        <div class="case-prose">
+          <p>
+            I design the interaction model. That covers the slider system itself (what variables, what ranges, what each value should produce), the prompt fragments that each variable maps to, the moderation layer, the RAG setup, and the way the whole system gets explained to customers and to the rest of the team.
+          </p>
+          <p>
+            The work is half prompt engineering, half information design. Half of it is figuring out what a slider value should do to the model. The other half is figuring out how to expose that to a super-user in a way they can reason about without becoming a prompt engineer.
+          </p>
+          <p>
+            I work with writers who don't write prompts, designers who don't know what RAG is, and product owners who need predictable outputs across customers in retail, hospitality, healthcare, and finance. Most of the work isn't generating outputs. It's making the system legible enough that the rest of the team can ship with it.
+          </p>
+        </div>
+      </section>
+
+      <!-- ===== Tags ===== -->
+      <div class="case-tags">
+        <span class="tag tag-green">AI agents</span>
+        <span class="tag tag-green">prompt engineering</span>
+        <span class="tag tag-green">RAG</span>
+        <span class="tag tag-green">Flowise</span>
+        <span class="tag tag-violet">product design</span>
+        <span class="tag tag-violet">interaction design</span>
+        <span class="tag tag-violet">model evaluation</span>
+        <span class="tag tag-violet">moderation</span>
+      </div>
+
+      <!-- ===== Bottom back link ===== -->
+      <div class="case-bottom-nav">
+        <a class="back-link" href="/index.html#work">
+          <span class="arr-back">←</span>
+          <span>Back to work</span>
+        </a>
+      </div>
+
+    </div>
+
+  </main>
+
+  <script>
+    // Theme toggle wiring
+    (function () {
+      var btn = document.getElementById("themeToggle");
+      var label = document.getElementById("themeLabel");
+
+      function syncLabel() {
+        var theme = document.documentElement.getAttribute("data-theme") || "dark";
+        label.textContent = theme === "dark" ? "Light" : "Dark";
+      }
+      syncLabel();
+
+      btn.addEventListener("click", function () {
+        var current = document.documentElement.getAttribute("data-theme") || "dark";
+        var next = current === "dark" ? "light" : "dark";
+        document.documentElement.setAttribute("data-theme", next);
+        try { localStorage.setItem("kml-theme", next); } catch (e) {}
+        syncLabel();
+      });
+    })();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ShopSim — Kasper Mork Lunde</title>
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+<link rel="stylesheet" href="/styles.css" />
+
+<script>
+  // Theme: localStorage > system preference > dark. Set before first paint.
+  (function () {
+    try {
+      var saved = localStorage.getItem("kml-theme");
+      var prefersLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
+      var theme = saved || (prefersLight ? "light" : "dark");
+      document.documentElement.setAttribute("data-theme", theme);
+    } catch (e) {
+      document.documentElement.setAttribute("data-theme", "dark");
+    }
+  })();
+</script>
+</head>
+<body>
+
+  <!-- Theme toggle: persistent, top-right -->
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme">
+    <span class="dot" aria-hidden="true"></span>
+    <span class="label" id="themeLabel">Light</span>
+  </button>
+
+  <main class="case">
+
+    <!-- Atmospheric blur in hero area -->
+    <div class="case-bg" aria-hidden="true"></div>
+
+    <div class="case-shell">
+
+      <!-- back to work, top-left -->
+      <a class="back-link" href="/index.html#work">
+        <span class="arr-back">←</span>
+        <span>Back to work</span>
+      </a>
+
+      <!-- ===== Header block ===== -->
+      <header class="case-header">
+        <span class="case-num" aria-hidden="true">05</span>
+        <h1 class="case-title">The bridge role on a shipped product</h1>
+        <p class="case-frame">
+          Gameplay developer on Attensi ShopSim (formerly Attensi Operations), the company's retail and convenience-store training product. I shipped every Operations project the company delivered. Performance optimization, gameplay logic, and the integration work between writers, artists, designers, customers, and code.
+        </p>
+      </header>
+
+      <!-- ===== § What ShopSim is ===== -->
+      <section class="case-section">
+        <span class="case-eyebrow">— What ShopSim is</span>
+        <h2 class="case-h2">What ShopSim is</h2>
+        <div class="case-prose">
+          <p>
+            A retail training simulation where players walk a store, handle customers, work the till, run minigames during downtime, and repeat scenarios to build skill. Each project is a different customer's store, different products, different staff procedures, different customer interactions. The product ships across the company's hospitality and retail clients. Mobile is a primary platform, so the minimum spec is iPhone 8 and up. That constraint matters more than it sounds.
+          </p>
+          <p>
+            The work is interesting because every project is the same product and a different product at the same time. Same engine, same template modules ("Shop Floor," the open store environment, and "Till," the counter interaction). Different geometry, different dialogue, different scoring, different rules. The job is making each customer's specific training feel custom while reusing the spine.
+          </p>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- ===== Reserved slot: ShopSim gameplay screenshot ===== -->
+    <div class="case-shell-wide">
+      <figure class="case-placeholder" aria-label="ShopSim gameplay placeholder" style="min-height: 320px;">
+        <span class="case-placeholder-label">— ShopSim gameplay (placeholder)</span>
+        <span class="case-placeholder-hint">
+          Shop Floor or Till module from a shipped customer project. In-product capture.
+        </span>
+      </figure>
+    </div>
+
+    <div class="case-shell">
+
+      <!-- ===== § Where I sat ===== -->
+      <section class="case-section">
+        <span class="case-eyebrow">— Where I sat</span>
+        <h2 class="case-h2">Where I sat</h2>
+        <div class="case-prose">
+          <p>
+            Each project had a 3D artist building the store, a writer building the dialogue and scenarios, a product manager managing the customer relationship, the customer themselves with requirements, and me. The official title was gameplay developer. The actual role was integration.
+          </p>
+          <p>
+            That meant filtering requests from the customer and designers before they reached art or me, smoothing the handover between the artist and the gameplay layer, catching issues early instead of late, and assembling the pieces into something that played well. Designers brought scenarios. Writers brought dialogue. Artists brought stores. Customers brought requirements that often conflicted with each other or with the platform constraints. I was the point where those pieces had to become a working product.
+          </p>
+          <p>
+            Most of the visible work in those projects belonged to other people. The store looks like the artist's store. The dialogue sounds like the writer's voice. The training objectives match the customer's brand. The part that's mine is the part you don't notice: the flow, the pacing, the moments where the gameplay carries the message instead of getting in its way.
+          </p>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- ===== Pull quote (breaks out wider than the body column) ===== -->
+    <div class="case-shell-wide">
+      <blockquote class="case-pullquote">
+        When integration goes well, no single person can point at the work and say "that's mine." That's what makes it integration.
+      </blockquote>
+    </div>
+
+    <div class="case-shell">
+
+      <!-- ===== § The constrained toolchain ===== -->
+      <section class="case-section" style="margin-top: 0;">
+        <span class="case-eyebrow">— The constrained toolchain</span>
+        <h2 class="case-h2">The constrained toolchain</h2>
+        <div class="case-prose">
+          <p>
+            Most of the gameplay logic in ShopSim runs through an in-house node-based programming tool. It's purpose-built for the product and has a finite palette of nodes. Some things you'd reach for in C# aren't available. You build the more technically interesting behaviors by combining the nodes you have in ways they weren't quite designed for.
+          </p>
+          <p>
+            This was familiar territory from gameplay programming. The interesting work is rarely "what feature do you want." It's "what can I build with what's actually here." A till interaction that branches based on customer mood, a shop floor that escalates difficulty as the player handles customers correctly, a minigame that feels different the second time you play it. None of these are nodes you can drop in. They're built from the nodes you have.
+          </p>
+          <p>
+            The constraint forced a specific kind of design discipline. You can't paper over a weak mechanic with more code. You have to make the mechanic actually work inside the system. That sharpened how I thought about gameplay before writing logic. Get the design right, then find the path through the available nodes. The discipline of designing for an interactive system that's already partially constrained is the same discipline I use now on AI agents with limited prompt budgets.
+          </p>
+        </div>
+      </section>
+
+      <!-- ===== § Performance ===== -->
+      <section class="case-section">
+        <span class="case-eyebrow">— Performance</span>
+        <h2 class="case-h2">Performance</h2>
+        <div class="case-prose">
+          <p>
+            ShopSim runs on phones. Every project gets shipped to staff who will play it on whatever device their company gave them, which often means older phones with thermal limits and small batteries. Scene optimization is constant.
+          </p>
+          <p>
+            Most of the performance work was finding boring mistakes early. On one project, the scene textures had been imported at 8k by accident, which destroyed framerates on mobile. On another, exported objects had landed in Unity at 100x scale because the export setting wasn't enforced upstream, which broke physics and produced uneven light baking. Character hair was using Photoshop format files instead of standard texture formats, eating memory for no benefit.
+          </p>
+          <p>
+            None of these are exotic problems. They're the kind of issues that compound across a product line if no one is looking for them. I defined best practices for the project so they got caught at the handover, not in QA. The cumulative result was a 3x performance improvement on the product and 50% faster content production once the cross-team conventions were in place.
+          </p>
+        </div>
+      </section>
+
+      <!-- ===== § The transition ===== -->
+      <section class="case-section">
+        <span class="case-eyebrow">— The transition</span>
+        <h2 class="case-h2">The transition</h2>
+        <div class="case-prose">
+          <p>
+            I moved from gameplay developer to AI designer in February 2025, but I still spend a small percentage of my time on Operations. I'm the only person in the company who knows how to set them up, so the handover isn't done yet. That's fine. The work overlaps more than it looks: a dialogue tree where NPCs respond to customer behavior in branching ways is the same shape of problem as an AI agent with personality sliders that respond to learner behavior in semi-bounded ways. Same problem. Different tools. Same craft.
+          </p>
+        </div>
+      </section>
+
+      <!-- ===== Tags ===== -->
+      <div class="case-tags">
+        <span class="tag tag-orange">Unity</span>
+        <span class="tag tag-orange">gameplay programming</span>
+        <span class="tag tag-violet">performance optimization</span>
+        <span class="tag tag-violet">cross-team collaboration</span>
+        <span class="tag tag-violet">node-based logic</span>
+        <span class="tag tag-violet">mobile</span>
+        <span class="tag tag-green">training simulations</span>
+        <span class="tag tag-violet">integration</span>
+      </div>
+
+      <!-- ===== Bottom back link ===== -->
+      <div class="case-bottom-nav">
+        <a class="back-link" href="/index.html#work">
+          <span class="arr-back">←</span>
+          <span>Back to work</span>
+        </a>
+      </div>
+
+    </div>
+
+  </main>
+
+  <script>
+    // Theme toggle wiring
+    (function () {
+      var btn = document.getElementById("themeToggle");
+      var label = document.getElementById("themeLabel");
+
+      function syncLabel() {
+        var theme = document.documentElement.getAttribute("data-theme") || "dark";
+        label.textContent = theme === "dark" ? "Light" : "Dark";
+      }
+      syncLabel();
+
+      btn.addEventListener("click", function () {
+        var current = document.documentElement.getAttribute("data-theme") || "dark";
+        var next = current === "dark" ? "light" : "dark";
+        document.documentElement.setAttribute("data-theme", next);
+        try { localStorage.setItem("kml-theme", next); } catch (e) {}
+        syncLabel();
+      });
+    })();
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Resonance — Kasper Mork Lunde</title>
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+<link rel="stylesheet" href="/styles.css" />
+
+<script>
+  // Theme: localStorage > system preference > dark. Set before first paint.
+  (function () {
+    try {
+      var saved = localStorage.getItem("kml-theme");
+      var prefersLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
+      var theme = saved || (prefersLight ? "light" : "dark");
+      document.documentElement.setAttribute("data-theme", theme);
+    } catch (e) {
+      document.documentElement.setAttribute("data-theme", "dark");
+    }
+  })();
+</script>
+</head>
+<body>
+
+  <!-- Theme toggle: persistent, top-right -->
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme">
+    <span class="dot" aria-hidden="true"></span>
+    <span class="label" id="themeLabel">Light</span>
+  </button>
+
+  <main class="case">
+
+    <!-- Atmospheric blur in hero area -->
+    <div class="case-bg" aria-hidden="true"></div>
+
+    <div class="case-shell">
+
+      <!-- back to work, top-left -->
+      <a class="back-link" href="/index.html#work">
+        <span class="arr-back">←</span>
+        <span>Back to work</span>
+      </a>
+
+      <!-- ===== Header block ===== -->
+      <header class="case-header">
+        <span class="case-num" aria-hidden="true">04</span>
+        <h1 class="case-title">When the team doesn't think in games</h1>
+        <p class="case-frame">
+          VR developer and game designer on Resonance, a cross-discipline VR experience built during Off-Piste 2021, a Den Norske Filmskolen and Crossover Labs program for immersive art. Nominated for Best XR Prototype/Demo at VRINN Awards 2021.
+        </p>
+      </header>
+
+      <!-- ===== § What Resonance was ===== -->
+      <section class="case-section">
+        <span class="case-eyebrow">— What Resonance was</span>
+        <h2 class="case-h2">What Resonance was</h2>
+        <div class="case-prose">
+          <p>
+            A VR experience where you step into a black-and-white painting and bring it back to life. The world starts monochrome and still. You interact with elements inside it. Color spreads from where you touch. By the end, the painting is back in color, and you've been the one to put it there.
+          </p>
+          <p>
+            The concept came from a painter who wanted to know what it felt like for someone to live inside her work. The sound designer scored the spread of color. The film director shaped the camera grammar of how you saw it. I built the thing.
+          </p>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- ===== Reserved slot: VR experience footage ===== -->
+    <div class="case-shell-wide">
+      <figure class="case-placeholder" aria-label="VR experience footage placeholder" style="min-height: 320px;">
+        <span class="case-placeholder-label">— VR experience footage (placeholder)</span>
+        <span class="case-placeholder-hint">
+          The painting coming back to life. Capture from inside the headset.
+        </span>
+      </figure>
+    </div>
+
+    <div class="case-shell">
+
+      <!-- ===== § The team ===== -->
+      <section class="case-section">
+        <span class="case-eyebrow">— The team</span>
+        <h2 class="case-h2">The team</h2>
+        <div class="case-prose">
+          <p>
+            Off-Piste is structured around cross-discipline collaboration. The brief: artists, producers, and creative practitioners pair with developers to build a VR experience under the mentorship of Europe's most experienced immersive-art practitioners. The point is to put people who don't usually work together into a room and see what happens.
+          </p>
+          <p>
+            Our team was a sound designer, a film director, a painter, and me. The first three came from sound, film, and visual art. None of them had a background in games. Most had never spent serious time with one. I was the only person on the team who thought natively in interactive systems.
+          </p>
+        </div>
+      </section>
+
+      <!-- ===== § What that actually meant ===== -->
+      <section class="case-section">
+        <span class="case-eyebrow">— What that actually meant</span>
+        <h2 class="case-h2">What that actually meant</h2>
+      </section>
+
+    </div>
+
+    <!-- ===== Pull quote (breaks out wider than the body column) ===== -->
+    <div class="case-shell-wide">
+      <blockquote class="case-pullquote">
+        The hardest part wasn't building the experience. It was translating it from three different professional languages into one.
+      </blockquote>
+    </div>
+
+    <div class="case-shell">
+
+      <section class="case-section" style="margin-top: 0;">
+        <div class="case-prose">
+          <p>
+            The painter described what the world should feel like in painterly terms: composition, weight, color theory, the relationship between figure and ground. The film director described the pacing and the camera in cinematic terms: the cut, the dolly, the reveal. The sound designer described the audio in his own terms: the texture of a held note, the swell, the silence. All three were precise inside their own disciplines. None of those disciplines have native concepts for "what happens when the user does X and the system responds with Y."
+          </p>
+          <p>
+            My job became translation. I'd hear a painter's note about composition and turn it into spatial logic the engine could implement. I'd take a film director's pacing instinct and figure out how to express it in VR where you can't actually cut. I'd take a sound designer's emotional arc and wire it to events the user triggers through their own choices. None of the original notes survived in their original form. All of them survived in spirit.
+          </p>
+          <p>
+            This taught me something I've used in every interactive system I've designed since: the people who care most about how something feels are often the worst at telling you how to build it, because they don't think in builds. The work isn't to demand they translate themselves. It's to learn enough of their language to translate for them.
+          </p>
+        </div>
+      </section>
+
+      <!-- ===== § What shipped ===== -->
+      <section class="case-section">
+        <span class="case-eyebrow">— What shipped</span>
+        <h2 class="case-h2">What shipped</h2>
+        <div class="case-prose">
+          <p>
+            A working VR prototype, playable in headset, that took someone through the painting in roughly fifteen minutes. The color spread mechanic was the central interaction. The sound design responded to the player's tempo and choices. The visual composition shifted between three painterly states depending on how the player moved through the space.
+          </p>
+          <p>
+            The prototype was nominated for Best XR Prototype/Demo at the VRINN Awards 2021.
+          </p>
+        </div>
+      </section>
+
+      <!-- ===== § What I took from it ===== -->
+      <section class="case-section">
+        <span class="case-eyebrow">— What I took from it</span>
+        <h2 class="case-h2">What I took from it</h2>
+        <div class="case-prose">
+          <p>
+            The Mørkredd lesson was about scope and architecture. The Resonance lesson is about collaboration. They're complementary.
+          </p>
+          <p>
+            Most interactive systems are built by teams where most members understand the medium. Resonance was the opposite: I was the only one who understood the medium, and the experience was richer because of that, not despite it. The painter brought ideas I would never have had. The film director's instincts about pacing produced moments more affecting than anything I would have built alone. The sound designer's score gave the work a soul.
+          </p>
+          <p>
+            The constraint of having to translate everything taught me that the medium isn't the work. The work is what the medium carries.
+          </p>
+          <p>
+            I do this now with AI agents. The writers and designers I work with at Attensi don't write prompts. They have instincts about voice, character, and what learners actually need. My job is to take those instincts and turn them into systems that behave the way the instincts suggested. The medium changed from VR to AI. The translation work is identical.
+          </p>
+        </div>
+      </section>
+
+      <!-- ===== Tags ===== -->
+      <div class="case-tags">
+        <span class="tag tag-orange">Unity</span>
+        <span class="tag tag-orange">VR</span>
+        <span class="tag tag-violet">immersive art</span>
+        <span class="tag tag-violet">cross-discipline collaboration</span>
+        <span class="tag tag-violet">prototyping</span>
+        <span class="tag tag-violet">interactive systems</span>
+        <span class="tag tag-green">Off-Piste</span>
+      </div>
+
+      <!-- ===== Bottom back link ===== -->
+      <div class="case-bottom-nav">
+        <a class="back-link" href="/index.html#work">
+          <span class="arr-back">←</span>
+          <span>Back to work</span>
+        </a>
+      </div>
+
+    </div>
+
+  </main>
+
+  <script>
+    // Theme toggle wiring
+    (function () {
+      var btn = document.getElementById("themeToggle");
+      var label = document.getElementById("themeLabel");
+
+      function syncLabel() {
+        var theme = document.documentElement.getAttribute("data-theme") || "dark";
+        label.textContent = theme === "dark" ? "Light" : "Dark";
+      }
+      syncLabel();
+
+      btn.addEventListener("click", function () {
+        var current = document.documentElement.getAttribute("data-theme") || "dark";
+        var next = current === "dark" ? "light" : "dark";
+        document.documentElement.setAttribute("data-theme", next);
+        try { localStorage.setItem("kml-theme", next); } catch (e) {}
+        syncLabel();
+      });
+    })();
+  </script>
+
+</body>
+</html>

@@ -1,359 +1,223 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Kasper Mork Lunde | Portfolio</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          fontFamily: {
-            sans: ['Inter', 'ui-sans-serif', 'system-ui'],
-          }
-        }
-      }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Kasper Mork Lunde — product &amp; AI designer</title>
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+<link rel="stylesheet" href="/styles.css" />
+
+<script>
+  // Theme: localStorage > system preference > dark.
+  // Set BEFORE first paint to avoid a flash.
+  (function () {
+    try {
+      var saved = localStorage.getItem("kml-theme");
+      var prefersLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
+      var theme = saved || (prefersLight ? "light" : "dark");
+      document.documentElement.setAttribute("data-theme", theme);
+    } catch (e) {
+      document.documentElement.setAttribute("data-theme", "dark");
     }
-  </script>
-  <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
-  <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
-  <script src="https://unpkg.com/@babel/standalone/babel.min.js" crossorigin></script>
+  })();
+</script>
 </head>
-<body class="bg-neutral-950 text-neutral-300 font-sans">
-  <div id="root"></div>
+<body>
 
-  <script type="text/babel">
-    const { useState } = React;
+  <!-- Theme toggle: persistent, top-right -->
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme">
+    <span class="dot" aria-hidden="true"></span>
+    <span class="label" id="themeLabel">Light</span>
+  </button>
 
-    function Portfolio() {
-      const [activeSection, setActiveSection] = useState('about');
+  <main>
 
-      return (
-        <div className="min-h-screen bg-neutral-950 text-neutral-300">
-          <nav className="fixed top-0 left-0 right-0 bg-neutral-950/90 backdrop-blur-sm z-50 border-b border-neutral-800/50">
-            <div className="max-w-4xl mx-auto px-8 py-5 flex justify-between items-center">
-              <span className="text-neutral-100 font-medium tracking-tight">Kasper Mork Lunde</span>
-              <div className="flex gap-10 text-sm">
-                {['about', 'work'].map(section => (
-                  <button
-                    key={section}
-                    onClick={() => setActiveSection(section)}
-                    className={`capitalize transition-colors ${activeSection === section ? 'text-neutral-100' : 'text-neutral-500 hover:text-neutral-300'}`}
-                  >
-                    {section}
-                  </button>
-                ))}
-              </div>
-            </div>
-          </nav>
+    <!-- ============================================================
+         HERO  —  first viewport, text only, aurora green radial blur
+         ============================================================ -->
+    <section class="hero">
+      <div class="hero-bg" aria-hidden="true"></div>
+      <div class="shell hero-inner">
+        <h1>
+          I design interactive systems<br />
+          that <em>respond to humans.</em>
+        </h1>
 
-          <main className="max-w-4xl mx-auto px-8 pt-32 pb-28">
-            {activeSection === 'about' && (
-              <div className="space-y-20">
-                <header className="space-y-8">
-                  <h1 className="text-4xl md:text-5xl font-medium text-neutral-100 leading-tight tracking-tight">
-                    Product and AI designer - <br />
-                    Making complex things simple
-                  </h1>
-                  <p className="text-lg text-neutral-400 leading-relaxed max-w-2xl">
-                    Using gamification, game psychology and advanced prompt engineering I turn complex AI capabilities into intuitive flows people actually enjoy using.
-                  </p>
-                </header>
-
-                <section>
-                  <div className="flex items-center gap-6 mb-8">
-                    <h2 className="text-lg font-medium text-neutral-100">What I do</h2>
-                    <div className="flex-1 h-px bg-neutral-700"></div>
-                  </div>
-                  <div className="grid md:grid-cols-3 gap-8">
-                    <div className="space-y-3">
-                      <p className="text-neutral-100 font-medium">AI Design</p>
-                      <p className="text-neutral-400 text-sm leading-relaxed">Prompt engineering, LLM orchestration, conversation design, with a focus on making AI output predictable and trustworthy</p>
-                    </div>
-                    <div className="space-y-3">
-                      <p className="text-neutral-100 font-medium">Game Development</p>
-                      <p className="text-neutral-400 text-sm leading-relaxed">Unity, C#, gameplay systems, helped shipp award-winning titles including Mosaic and Mørkredd</p>
-                    </div>
-                    <div className="space-y-3">
-                      <p className="text-neutral-100 font-medium">Product Design</p>
-                      <p className="text-neutral-400 text-sm leading-relaxed">Figma, UX-design, easing the end-users journey through gamification and game psychology</p>
-                    </div>
-                  </div>
-                </section>
-
-                <section>
-                  <div className="flex items-center gap-6 mb-6">
-                    <h2 className="text-lg font-medium text-neutral-100">Recognition</h2>
-                    <div className="flex-1 h-px bg-neutral-700"></div>
-                  </div>
-                  <div className="space-y-4 text-sm">
-                    <div className="flex justify-between items-baseline border-b border-neutral-800/50 pb-4">
-                      <span className="text-neutral-200">Jury's Special Mention</span>
-                      <span className="text-neutral-500">Nordic Game Awards · Mosaic</span>
-                    </div>
-                    <div className="flex justify-between items-baseline border-b border-neutral-800/50 pb-4">
-                      <span className="text-neutral-200">GOTY – Small Screen</span>
-                      <span className="text-neutral-500">Spillprisen · Mosaic</span>
-                    </div>
-                    <div className="flex justify-between items-baseline border-b border-neutral-800/50 pb-4">
-                      <span className="text-neutral-200">Best Visual Style</span>
-                      <span className="text-neutral-500">Spillprisen · Mosaic</span>
-                    </div>
-                    <div className="flex justify-between items-baseline">
-                      <span className="text-neutral-200">Nominee - Best XR Prototype</span>
-                      <span className="text-neutral-500">VRINN · Resonance</span>
-                    </div>
-                  </div>
-                </section>
-
-                <section className="grid md:grid-cols-2 gap-12">
-                  <div>
-                    <div className="flex items-center gap-6 mb-4">
-                      <h2 className="text-lg font-medium text-neutral-100">Tools</h2>
-                      <div className="flex-1 h-px bg-neutral-700"></div>
-                    </div>
-                    <p className="text-neutral-300">Unity, C#, Blender<br />
-                      Claude, Flowise, ChatGPT<br />
-                      Jira, Figma, Codex</p>
-                  </div>
-                  <div>
-                    <div className="flex items-center gap-6 mb-4">
-                      <h2 className="text-lg font-medium text-neutral-100">Education</h2>
-                      <div className="flex-1 h-px bg-neutral-700"></div>
-                    </div>
-                    <p className="text-neutral-200">BA Game Design</p>
-                    <p className="text-neutral-500 text-sm mt-1">Westerdals Oslo ACT · 2015–2018</p>
-                  </div>
-                </section>
-
-                <section className="pt-12 border-t border-neutral-800/50">
-                  <div className="flex items-center gap-6 mb-6">
-                    <h2 className="text-lg font-medium text-neutral-100">Contact</h2>
-                    <div className="flex-1 h-px bg-neutral-700"></div>
-                  </div>
-                  <div className="flex flex-wrap gap-8 text-sm">
-                    <a href="mailto:kasperml@hotmail.com" className="text-neutral-200 hover:text-white transition-colors">kasperml@hotmail.com</a>
-                    <span className="text-neutral-400">+47 970 96 782</span>
-                    <a href="https://linkedin.com/in/kasperlunde" className="text-neutral-200 hover:text-white transition-colors">LinkedIn</a>
-                  </div>
-                </section>
-              </div>
-            )}
-
-            {activeSection === 'work' && (
-              <div className="space-y-24">
-                <section className="space-y-20">
-                  <div className="flex items-center gap-6 mb-4">
-                    <h2 className="text-lg font-medium text-neutral-100">Professional Projects</h2>
-                    <div className="flex-1 h-px bg-neutral-700"></div>
-                  </div>
-
-                  <article className="space-y-8">
-                    <div>
-                      <p className="text-neutral-500 text-sm mb-2">Attensi · 2025</p>
-                      <h3 className="text-2xl font-medium text-neutral-100 tracking-tight">AI-Powered Content Generation</h3>
-                      <p className="text-neutral-400 mt-3 leading-relaxed">
-                        Designing AI systems that help content creators generate training materials and educational dialogues at scale — making complex AI capabilities feel simple and intuitive.
-                      </p>
-                    </div>
-
-                    <div className="bg-neutral-900 rounded-xl p-6 border border-neutral-800">
-                      <p className="text-sm text-neutral-200 mb-4">The challenge</p>
-                      <p className="text-neutral-400 text-sm leading-relaxed">
-                        Creating quality training content traditionally takes significant time and expertise. The goal was to build AI-powered tools that drastically speed up content creation while maintaining high standards — output that's predictable, on-brand, and follows established best practices.
-                      </p>
-                    </div>
-
-                    <div className="space-y-6">
-                      <p className="text-sm text-neutral-200">My contribution</p>
-                      <div className="grid md:grid-cols-2 gap-6 text-sm">
-                        <div className="space-y-2">
-                          <p className="text-neutral-300">Prompt Engineering</p>
-                          <p className="text-neutral-500">Designing prompts and variable structures that produce consistent, trustworthy output aligned with quality standards.</p>
-                        </div>
-                        <div className="space-y-2">
-                          <p className="text-neutral-300">Conversation Design</p>
-                          <p className="text-neutral-500">Creating frameworks for lifelike educational dialogues — natural flow, appropriate tone, and effective teaching moments.</p>
-                        </div>
-                        <div className="space-y-2">
-                          <p className="text-neutral-300">AI System Architecture</p>
-                          <p className="text-neutral-500">Building modular AI workflows using visual orchestration tools to handle complex content generation tasks.</p>
-                        </div>
-                        <div className="space-y-2">
-                          <p className="text-neutral-300">UX for AI Tools</p>
-                          <p className="text-neutral-500">Input on user flows that make powerful AI capabilities accessible to non-technical content creators.</p>
-                        </div>
-                      </div>
-                    </div>
-                  </article>
-
-                  <article className="space-y-8">
-                    <div>
-                      <div className="flex items-start justify-between gap-4">
-                        <div>
-                          <p className="text-neutral-500 text-sm mb-2">Attensi · 2021–2025</p>
-                          <h3 className="text-2xl font-medium text-neutral-100 tracking-tight">Attensi ShopSim & Operations</h3>
-                        </div>
-                        <a href="https://attensi.com/products/impact/" target="_blank" rel="noopener noreferrer" className="text-neutral-500 text-sm hover:text-neutral-300 transition-colors whitespace-nowrap">attensi.com →</a>
-                      </div>
-                      <p className="text-neutral-400 mt-3 leading-relaxed">
-                        Gameplay Designer on Attensi's flagship retail training simulations — full 3D experiences that train everyday routines and skills in complex retail environments. These simulations power training for major global brands.
-                      </p>
-                    </div>
-
-                    <div className="bg-neutral-900 rounded-xl p-6 border border-neutral-800">
-                      <p className="text-sm text-neutral-200 mb-4">Scale & Impact</p>
-                      <p className="text-neutral-400 text-sm leading-relaxed">
-                        Attensi's simulation training reaches users across 150+ countries in 50+ languages. Major retail clients include Circle K (85,000+ trained associates globally), Starbucks, Spar, and other industry leaders.
-                      </p>
-                    </div>
-
-                    <div className="space-y-6">
-                      <p className="text-sm text-neutral-200">My contribution</p>
-                      <div className="grid md:grid-cols-2 gap-6 text-sm">
-                        <div className="space-y-2">
-                          <p className="text-neutral-300">Gameplay design</p>
-                          <p className="text-neutral-500">Helped setting up and tweaking gameplay in every ShopSim shipped since 2021.</p>
-                        </div>
-                        <div className="space-y-2">
-                          <p className="text-neutral-300">Optimization</p>
-                          <p className="text-neutral-500">Increased performance by 3x on lower end devices using cutting edge technologies and cross-team collaboration.</p>
-                        </div>
-                        <div className="space-y-2">
-                          <p className="text-neutral-300">Pipeline</p>
-                          <p className="text-neutral-500">Strengthened pipeline between ART, developers and writers through careful planning and iteration.</p>
-                        </div>
-                        <div className="space-y-2">
-                          <p className="text-neutral-300">Globalization</p>
-                          <p className="text-neutral-500">Provided support for multiple languages in ShopSim, reaching more users than before.</p>
-                        </div>
-                      </div>
-                    </div>
-                  </article>
-                </section>
-
-                <section className="space-y-12">
-                  <div className="flex items-center gap-6 mb-4">
-                    <h2 className="text-lg font-medium text-neutral-100">Shipped Titles</h2>
-                    <div className="flex-1 h-px bg-neutral-700"></div>
-                  </div>
-
-                  <article className="space-y-6">
-                    <div>
-                      <div className="flex items-start justify-between gap-4">
-                        <div>
-                          <p className="text-neutral-500 text-sm mb-2">Hyper Games & Krillbite · 2019</p>
-                          <h3 className="text-2xl font-medium text-neutral-100 tracking-tight">Mosaic</h3>
-                        </div>
-                        <a href="https://store.steampowered.com/app/349270/Mosaic/" target="_blank" rel="noopener noreferrer" className="text-neutral-500 text-sm hover:text-neutral-300 transition-colors whitespace-nowrap">Steam →</a>
-                      </div>
-                      <p className="text-neutral-400 mt-3 leading-relaxed">
-                        Gameplay Programmer on the award-winning narrative game about modern life and isolation. Also worked on Mosaic:BlipBlop and Mørkredd.
-                      </p>
-                    </div>
-
-                    <div className="flex flex-wrap gap-3 text-xs">
-                      <span className="bg-neutral-800 text-neutral-300 px-3 py-1.5 rounded-full">Jury's Special Mention — Nordic Game Awards</span>
-                      <span className="bg-neutral-800 text-neutral-300 px-3 py-1.5 rounded-full">GOTY Small Screen — Spillprisen</span>
-                      <span className="bg-neutral-800 text-neutral-300 px-3 py-1.5 rounded-full">Best Visual Style — Spillprisen</span>
-                    </div>
-                  </article>
-
-                  
-                  <article className="space-y-6">
-                    <div>
-                      <div className="flex items-start justify-between gap-4">
-                        <div>
-                          <p className="text-neutral-500 text-sm mb-2">2021</p>
-                          <h3 className="text-2xl font-medium text-neutral-100 tracking-tight">Resonance</h3>
-                        </div>
-                      </div>
-                      <p className="text-neutral-400 mt-3 leading-relaxed">
-                         Cross-dicipline VR relaxation experience where you step into a painting to find inner peace.
-                      </p>
-                    </div>
-
-                    <div className="flex flex-wrap gap-3 text-xs">
-                      <span className="bg-neutral-800 text-neutral-300 px-3 py-1.5 rounded-full">Nominee for Best XR Prototype/Demo — VRINN 2021.</span>
-                    </div>
-                  </article>
-                </section>
-
-                <section className="space-y-12">
-                  <div className="flex items-center gap-6 mb-4">
-                    <h2 className="text-lg font-medium text-neutral-100">Personal Projects</h2>
-                    <div className="flex-1 h-px bg-neutral-700"></div>
-                  </div>
-
-                  <div className="grid md:grid-cols-2 gap-10">
-                    <article className="space-y-4">
-                      <div className="flex items-start justify-between gap-4">
-                        <h3 className="text-lg text-neutral-100">Bartleby Consultant Calculators INC</h3>
-                        <a href="https://puffinstudios.itch.io/bartleby-consultant-calculators-inc" target="_blank" rel="noopener noreferrer" className="text-neutral-500 text-sm hover:text-neutral-300 transition-colors whitespace-nowrap">itch.io →</a>
-                      </div>
-                      <p className="text-neutral-400 text-sm leading-relaxed">
-                        A retro-inspired puzzle-adventure where navigating an old-school computer system is your only way out. Explore directories, unlock commands through mini-games, and piece together the system's secrets to finally go home.
-                      </p>
-                      <p className="text-neutral-500 text-xs">Game Design, Gameplay Programming · with Vetle Bjørn Berlin</p>
-                    </article>
-
-                    <article className="space-y-4">
-                      <div className="flex items-start justify-between gap-4">
-                        <h3 className="text-lg text-neutral-100">MacGyver Simulator</h3>
-                        <a href="https://puffinstudios.itch.io/macgyver-simulator" target="_blank" rel="noopener noreferrer" className="text-neutral-500 text-sm hover:text-neutral-300 transition-colors whitespace-nowrap">itch.io →</a>
-                      </div>
-                      <p className="text-neutral-400 text-sm leading-relaxed">
-                        "It's amazing what you can do with duct tape." A simulation game submitted to SCRUB JAM.
-                      </p>
-                      <p className="text-neutral-500 text-xs">Game Jam Entry</p>
-                    </article>
-                  </div>
-                </section>
-
-                <section className="space-y-12">
-                  <div className="flex items-center gap-6 mb-4">
-                    <h2 className="text-lg font-medium text-neutral-100">Other Experience</h2>
-                    <div className="flex-1 h-px bg-neutral-700"></div>
-                  </div>
-
-                  <article className="space-y-3">
-                    <p className="text-neutral-500 text-sm">Kristiania University College · 2021–2022</p>
-                    <h3 className="text-lg text-neutral-100">Lecturer, Game Design BA</h3>
-                    <p className="text-neutral-400 text-sm leading-relaxed">Teaching game development fundamentals and mentoring student projects.</p>
-                  </article>
-                  
-                  <article className="space-y-3">
-                    <p className="text-neutral-500 text-sm">NRK · 2019</p>
-                    <h3 className="text-lg text-neutral-100">Valgspillet 2019</h3>
-                    <p className="text-neutral-400 text-sm leading-relaxed">Gaming meets national television — city-building during the 2019 Norwegian municipal election.</p>
-                  </article>
-                </section>
-
-                <section className="pt-12 border-t border-neutral-800/50">
-                  <div className="flex items-center gap-6 mb-6">
-                    <h2 className="text-lg font-medium text-neutral-100">Contact</h2>
-                    <div className="flex-1 h-px bg-neutral-700"></div>
-                  </div>
-                  <div className="flex flex-wrap gap-8 text-sm">
-                    <a href="mailto:kasperml@hotmail.com" className="text-neutral-200 hover:text-white transition-colors">kasperml@hotmail.com</a>
-                    <span className="text-neutral-400">+47 970 96 782</span>
-                    <a href="https://linkedin.com/in/kasperlunde" className="text-neutral-200 hover:text-white transition-colors">LinkedIn</a>
-                  </div>
-                </section>
-              </div>
-            )}
-          </main>
+        <div class="hero-meta">
+          <span class="first">— Kasper Mork Lunde · Oslo</span>
+          <span class="line">Currently designing AI agents at Attensi.</span>
+          <span class="line">Previously gameplay programmer on award-winning games.</span>
         </div>
-      );
-    }
+      </div>
+    </section>
 
-    const rootElement = document.getElementById('root');
-    const root = ReactDOM.createRoot(rootElement);
-    root.render(<Portfolio />);
+    <!-- ============================================================
+         SELECTED WORK  —  five tiles, 2-col desktop / 1-col mobile
+         ============================================================ -->
+    <section class="work" id="work">
+      <div class="shell">
+        <span class="sec-label">— Selected work</span>
+
+        <div class="work-grid">
+
+          <a class="tile" href="/work/questboard.html">
+            <span class="tile-num">— 01</span>
+            <h3 class="tile-title">Questboard</h3>
+            <p class="tile-desc">
+              A personal AI system that scrapes job boards daily, scores postings against my CV, and drafts tailored application letters in my tone of voice.
+            </p>
+            <div class="tile-tags">
+              <span class="tag tag-green">AI agents</span>
+              <span class="tag tag-green">prompt engineering</span>
+              <span class="tag tag-violet">personal tools</span>
+            </div>
+          </a>
+
+          <a class="tile" href="/work/fast-assistant.html">
+            <span class="tile-num">— 02</span>
+            <h3 class="tile-title">FAST Assistant</h3>
+            <p class="tile-desc">
+              Designing the personality of an AI agent through sliders, not prompts. Production work at Attensi.
+            </p>
+            <div class="tile-tags">
+              <span class="tag tag-green">AI design</span>
+              <span class="tag tag-green">prompt engineering</span>
+              <span class="tag tag-green">RAG</span>
+              <span class="tag tag-violet">interaction design</span>
+            </div>
+          </a>
+
+          <a class="tile" href="/work/morkredd.html">
+            <span class="tile-num">— 03</span>
+            <h3 class="tile-title">Mørkredd</h3>
+            <p class="tile-desc">
+              Gameplay programmer on a Nordic Game of the Year winner. Including the multiplayer prototype that didn't ship.
+            </p>
+            <div class="tile-tags">
+              <span class="tag tag-orange">gameplay programming</span>
+              <span class="tag tag-orange">Unity</span>
+              <span class="tag tag-orange">multiplayer</span>
+            </div>
+          </a>
+
+          <a class="tile" href="/work/resonance.html">
+            <span class="tile-num">— 04</span>
+            <h3 class="tile-title">Resonance</h3>
+            <p class="tile-desc">
+              A VR experience built with a painter, a sound designer, and a film director who didn't think in games. Best XR Prototype/Demo nominee, VRINN Awards 2021.
+            </p>
+            <div class="tile-tags">
+              <span class="tag tag-orange">VR</span>
+              <span class="tag tag-orange">Unity</span>
+              <span class="tag tag-violet">cross-discipline</span>
+              <span class="tag tag-violet">immersive art</span>
+            </div>
+          </a>
+
+          <a class="tile" href="/work/shopsim.html">
+            <span class="tile-num">— 05</span>
+            <h3 class="tile-title">ShopSim</h3>
+            <p class="tile-desc">
+              The bridge role on a shipped product. Gameplay logic, performance optimization, and the integration work between writers, artists, and code.
+            </p>
+            <div class="tile-tags">
+              <span class="tag tag-orange">Unity</span>
+              <span class="tag tag-orange">gameplay programming</span>
+              <span class="tag tag-violet">cross-team work</span>
+            </div>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         ABOUT  —  two paragraphs, max ~620px, link to full about
+         ============================================================ -->
+    <section class="about" id="about">
+      <div class="shell">
+        <span class="sec-label">— About</span>
+
+        <div class="about-body">
+          <p>
+            I design interactive systems that respond to humans. That's the through-line under everything: gameplay programming on award-winning games at Hyper Games, training simulations and dialogue logic at Attensi, AI agents that have to feel like specific people.
+          </p>
+          <p>
+            The path looks linear in hindsight, but each step felt like a side step at the time. What connects them isn't the technology. It's the question. How do you make a system feel alive to the person interacting with it?
+          </p>
+
+          <a class="about-link" href="/about.html">
+            More about me <span class="arr">→</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         CONTACT  —  four links stacked vertically, mono treatment
+         ============================================================ -->
+    <section class="contact" id="contact">
+      <div class="shell">
+        <span class="sec-label">— Contact</span>
+
+        <div class="contact-list">
+          <a class="contact-link" href="mailto:kasperml@hotmail.com">
+            <span class="idx">01</span>
+            <span>Email</span>
+            <span class="arr">→</span>
+          </a>
+          <a class="contact-link" href="https://linkedin.com/in/kasperlunde">
+            <span class="idx">02</span>
+            <span>LinkedIn</span>
+            <span class="arr">→</span>
+          </a>
+          <a class="contact-link" href="https://github.com/Kaslun">
+            <span class="idx">03</span>
+            <span>GitHub</span>
+            <span class="arr">→</span>
+          </a>
+          <a class="contact-link" href="/cv/Kasper-Mork-Lunde-CV-AI-Branded.pdf">
+            <span class="idx">04</span>
+            <span>CV (PDF)</span>
+            <span class="arr">→</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================================
+         FOOTER
+         ============================================================ -->
+    <footer>
+      <div class="shell">
+        — Made in Oslo, reviewed by Chili.
+      </div>
+    </footer>
+
+  </main>
+
+  <script>
+    // Theme toggle wiring
+    (function () {
+      var btn = document.getElementById("themeToggle");
+      var label = document.getElementById("themeLabel");
+
+      function syncLabel() {
+        var theme = document.documentElement.getAttribute("data-theme") || "dark";
+        // Label shows the mode you'd switch TO
+        label.textContent = theme === "dark" ? "Light" : "Dark";
+      }
+      syncLabel();
+
+      btn.addEventListener("click", function () {
+        var current = document.documentElement.getAttribute("data-theme") || "dark";
+        var next = current === "dark" ? "light" : "dark";
+        document.documentElement.setAttribute("data-theme", next);
+        try { localStorage.setItem("kml-theme", next); } catch (e) {}
+        syncLabel();
+      });
+    })();
   </script>
+
 </body>
 </html>

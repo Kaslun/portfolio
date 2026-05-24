@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Questboard — Kasper Mork Lunde</title>
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+<link rel="stylesheet" href="/styles.css" />
+
+<script>
+  // Theme: localStorage > system preference > dark. Set before first paint.
+  (function () {
+    try {
+      var saved = localStorage.getItem("kml-theme");
+      var prefersLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
+      var theme = saved || (prefersLight ? "light" : "dark");
+      document.documentElement.setAttribute("data-theme", theme);
+    } catch (e) {
+      document.documentElement.setAttribute("data-theme", "dark");
+    }
+  })();
+</script>
+</head>
+<body>
+
+  <!-- Theme toggle: persistent, top-right -->
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme">
+    <span class="dot" aria-hidden="true"></span>
+    <span class="label" id="themeLabel">Light</span>
+  </button>
+
+  <main class="case">
+
+    <!-- Atmospheric blur in hero area -->
+    <div class="case-bg" aria-hidden="true"></div>
+
+    <div class="case-shell">
+
+      <!-- back to work, top-left -->
+      <a class="back-link" href="/index.html#work">
+        <span class="arr-back">←</span>
+        <span>Back to work</span>
+      </a>
+
+      <!-- ===== Header block ===== -->
+      <header class="case-header">
+        <span class="case-num" aria-hidden="true">01</span>
+        <h1 class="case-title">What I learned building my own job search agent</h1>
+        <p class="case-frame">
+          A personal AI system that scrapes job boards daily, scores postings against my CV, and drafts tailored application letters in my tone of voice. Built because applying to jobs the normal way wasn't working for me.
+        </p>
+      </header>
+
+      <!-- ===== § The actual problem ===== -->
+      <section class="case-section">
+        <span class="case-eyebrow">— The actual problem</span>
+        <h2 class="case-h2">The actual problem</h2>
+        <div class="case-prose">
+          <p>
+            Job applications are a small task disguised as a big one. Open LinkedIn, scroll, read a posting, decide if it fits, rewrite my CV bullet points for the role, draft a cover letter that doesn't sound like a template, send. Repeat fifty times.
+          </p>
+          <p>
+            Each step is fine. The pile is what breaks you.
+          </p>
+          <p>
+            I noticed I was avoiding the whole process even when I wanted to apply. Not because writing is hard. Because the activation energy to start was higher than the energy to write any single piece of it once I was in. The work was easy. Getting to the work was the wall.
+          </p>
+          <p>
+            So I built a system that does the front half of the process before I touch it. By the time I sit down, the inventory is curated, the scoring is honest, and the cover letter draft is already in my voice. My job is editing and deciding, not starting.
+          </p>
+        </div>
+      </section>
+
+      <!-- ===== § The honest scoring decision ===== -->
+      <section class="case-section">
+        <span class="case-eyebrow">— The honest scoring decision</span>
+        <h2 class="case-h2">The honest scoring decision</h2>
+        <div class="case-prose">
+          <p>
+            The interesting part isn't the scraping. It's the scoring prompt.
+          </p>
+          <p>
+            Most AI job-matching tools optimize for "your application is a match!" because optimism feels helpful and gets users to engage. I wanted the opposite. A system that mostly says no, and is useful precisely because of that.
+          </p>
+          <p>
+            The scoring prompt tells Claude to score harshly on role family, seniority, and skill fit. A 9-10 is "worth applying." A 7-8 is "good match with one gap." Below 7, the job goes to the dashboard but quietly, no notification.
+          </p>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- ===== Pull quote (breaks out wider than the body column) ===== -->
+    <div class="case-shell-wide">
+      <blockquote class="case-pullquote">
+        I'd rather see five honest 8s than fifty fake 9s.
+      </blockquote>
+    </div>
+
+    <div class="case-shell">
+      <section class="case-section" style="margin-top: 0;">
+        <div class="case-prose">
+          <p>
+            This sounds obvious until you build it. The pressure to inflate is everywhere: more matches means more apparent value, positive scores feel encouraging, the model defaults to generous. You have to fight it.
+          </p>
+          <p>
+            I tuned the prompt over several iterations to keep the rubric harsh, added concrete examples of what each band looks like, and gave it explicit guidance on location handling for Nordic vs. EU vs. US-only roles.
+          </p>
+          <p>
+            The result: a daily list of new jobs, scored 1-10, each with a one-sentence rationale. Most days I look at the 8+ band, ignore the rest, and decide which to actually apply to. That's the value. Not volume. Signal.
+          </p>
+        </div>
+      </section>
+    </div>
+
+    <!-- ===== Reserved slot: architecture diagram ===== -->
+    <div class="case-shell-wide">
+      <figure class="case-placeholder" aria-label="Architecture diagram placeholder">
+        <span class="case-placeholder-label">— Architecture diagram (placeholder)</span>
+        <span class="case-placeholder-hint">
+          scrape → filter → dedupe → score → draft. Daily run, profile-aware, with prompt caching on the CV step.
+        </span>
+      </figure>
+    </div>
+
+    <div class="case-shell">
+
+      <!-- ===== § What's underneath ===== -->
+      <section class="case-section">
+        <span class="case-eyebrow">— What's underneath</span>
+        <h2 class="case-h2">What's underneath</h2>
+        <div class="case-prose">
+          <p>
+            The system runs daily. A Python scraper hits a mix of generic ATS endpoints and studio-specific job boards, fetching in parallel where possible and sequentially where rate limits demand.
+          </p>
+          <p>
+            Cheap filters run first: title keywords, location, seniority, exclusions. Survivors get deduped against the existing database, so the system only scores genuinely new postings. Only then does the expensive scoring step run, against a hard cap per profile to defend against runaway behavior if a scraper breaks.
+          </p>
+          <p>
+            The CV is sent with prompt caching, so the cached portion costs ~80% less on repeated calls within a run. Combined with the dedupe step keeping the daily scoring count low, the whole thing runs on a few cents a day. Most "AI for X" tools fail in the same way: they don't decide what good looks like, so the model decides for them. Cost discipline follows the same principle.
+          </p>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- ===== Reserved slot: dashboard screenshot ===== -->
+    <div class="case-shell-wide">
+      <figure class="case-placeholder" aria-label="Dashboard screenshot placeholder" style="min-height: 320px;">
+        <span class="case-placeholder-label">— Dashboard screenshot (placeholder)</span>
+        <span class="case-placeholder-hint">
+          The Next.js dashboard view. Daily scored list, profile filter, rationale column, status pills.
+        </span>
+      </figure>
+    </div>
+
+    <div class="case-shell">
+
+      <section class="case-section" style="margin-top: 56px;">
+        <div class="case-prose">
+          <p>
+            Each profile has its own CV variant, vertical filters, and scoring context. I can target AI design roles and game design roles in parallel without one diluting the other. The dashboard shows everything in one view, with status, rationale, and the original posting.
+          </p>
+          <p>
+            Cover letter drafting is a separate step, triggered manually, using my tone-of-voice guidelines and the specific job description.
+          </p>
+          <p>
+            Stack: Python scraper, Supabase backend, Next.js dashboard on Vercel, Claude Haiku for scoring, Claude Sonnet for letter drafting. Everything is open source on GitHub.
+          </p>
+        </div>
+      </section>
+
+      <!-- ===== § What I've learned so far ===== -->
+      <section class="case-section">
+        <span class="case-eyebrow">— What I've learned so far</span>
+        <h2 class="case-h2">What I've learned so far</h2>
+        <div class="case-prose">
+          <p>
+            I've used Questboard to apply to two jobs. Small sample, but both were genuinely strong fits, scored 8 and 9 by the system. The 8 was rejected. The 9 is pending.
+          </p>
+          <p>
+            The point isn't the conversion rate yet. It's that the system filtered me from a noisy daily list down to applications I felt good about sending. That's the part that was breaking before.
+          </p>
+          <p>
+            The harder problem turned out to be the scoring rubric, not the scraping. Once I committed to harsh, honest scoring with explicit examples, the rest of the system became useful. Without that, more data would have just been more noise.
+          </p>
+          <p>
+            I also built this knowing recruiters might see the project and recognize that I might be using it to apply to their company. That felt like a feature, not a bug. If a recruiter is suspicious of someone who built infrastructure to make their applications more thoughtful, we probably aren't a good fit anyway.
+          </p>
+        </div>
+      </section>
+
+      <!-- ===== Tags ===== -->
+      <div class="case-tags">
+        <span class="tag tag-green">AI agents</span>
+        <span class="tag tag-green">prompt engineering</span>
+        <span class="tag tag-green">Claude API</span>
+        <span class="tag tag-violet">prompt caching</span>
+        <span class="tag tag-violet">full-stack</span>
+        <span class="tag tag-violet">Python</span>
+        <span class="tag tag-violet">Next.js</span>
+        <span class="tag tag-violet">Supabase</span>
+        <span class="tag tag-orange">personal tools</span>
+      </div>
+
+      <!-- ===== Bottom back link ===== -->
+      <div class="case-bottom-nav">
+        <a class="back-link" href="/index.html#work">
+          <span class="arr-back">←</span>
+          <span>Back to work</span>
+        </a>
+      </div>
+
+    </div>
+
+  </main>
+
+  <script>
+    // Theme toggle wiring
+    (function () {
+      var btn = document.getElementById("themeToggle");
+      var label = document.getElementById("themeLabel");
+
+      function syncLabel() {
+        var theme = document.documentElement.getAttribute("data-theme") || "dark";
+        label.textContent = theme === "dark" ? "Light" : "Dark";
+      }
+      syncLabel();
+
+      btn.addEventListener("click", function () {
+        var current = document.documentElement.getAttribute("data-theme") || "dark";
+        var next = current === "dark" ? "light" : "dark";
+        document.documentElement.setAttribute("data-theme", next);
+        try { localStorage.setItem("kml-theme", next); } catch (e) {}
+        syncLabel();
+      });
+    })();
+  </script>
+
+</body>
+</html>

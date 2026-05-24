@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>404 — Kasper Mork Lunde</title>
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+<link rel="stylesheet" href="/styles.css" />
+
+<script>
+  // Theme: localStorage > system preference > dark. Set before first paint.
+  (function () {
+    try {
+      var saved = localStorage.getItem("kml-theme");
+      var prefersLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
+      var theme = saved || (prefersLight ? "light" : "dark");
+      document.documentElement.setAttribute("data-theme", theme);
+    } catch (e) {
+      document.documentElement.setAttribute("data-theme", "dark");
+    }
+  })();
+</script>
+
+<style>
+  /* 404 — single column, centered vertically and horizontally */
+  .nf-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 24px;
+    text-align: center;
+  }
+  .nf-inner {
+    max-width: 520px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 24px;
+  }
+  .nf-puffin {
+    width: auto;
+    height: 200px;
+    /* render the multi-color placeholder as a muted monochrome silhouette that
+       sits on the page background. When the hand-drawn puffin lands, this filter
+       can stay (harmless on a monochrome SVG) or be removed. */
+    filter: grayscale(1) opacity(0.55);
+  }
+  .nf-label {
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--fg-muted);
+    margin-top: 8px;
+  }
+  .nf-heading {
+    font-family: var(--font-display);
+    font-weight: 400;
+    font-size: clamp(26px, 4vw, 32px);
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+    color: var(--fg);
+    text-wrap: balance;
+    font-optical-sizing: auto;
+  }
+  .nf-heading em {
+    font-style: italic;
+    color: var(--accent);
+    font-weight: 400;
+  }
+  .nf-caption {
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--fg-muted);
+  }
+  .nf-back {
+    margin-top: 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+    color: var(--fg-muted);
+    transition: color var(--dur-fast) var(--ease-out);
+  }
+  .nf-back:hover { color: var(--fg); }
+  .nf-back .arr-back {
+    display: inline-block;
+    transition: transform var(--dur-fast) var(--ease-out);
+  }
+  .nf-back:hover .arr-back { transform: translateX(-3px); }
+</style>
+</head>
+<body>
+
+  <!-- Theme toggle: persistent, top-right -->
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme">
+    <span class="dot" aria-hidden="true"></span>
+    <span class="label" id="themeLabel">Light</span>
+  </button>
+
+  <main class="nf-page">
+    <div class="nf-inner">
+      <img class="nf-puffin" src="/assets/puffin.svg" alt="" aria-hidden="true" />
+      <span class="nf-label">— 404</span>
+      <h1 class="nf-heading">You found a page that <em>does not exist.</em></h1>
+      <p class="nf-caption">The puffin has been notified.</p>
+      <a class="nf-back" href="/">
+        <span class="arr-back">←</span>
+        <span>Back to home</span>
+      </a>
+    </div>
+  </main>
+
+  <script>
+    // Theme toggle wiring
+    (function () {
+      var btn = document.getElementById("themeToggle");
+      var label = document.getElementById("themeLabel");
+
+      function syncLabel() {
+        var theme = document.documentElement.getAttribute("data-theme") || "dark";
+        label.textContent = theme === "dark" ? "Light" : "Dark";
+      }
+      syncLabel();
+
+      btn.addEventListener("click", function () {
+        var current = document.documentElement.getAttribute("data-theme") || "dark";
+        var next = current === "dark" ? "light" : "dark";
+        document.documentElement.setAttribute("data-theme", next);
+        try { localStorage.setItem("kml-theme", next); } catch (e) {}
+        syncLabel();
+      });
+    })();
+  </script>
+
+</body>
+</html>

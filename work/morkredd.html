@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Mørkredd — Kasper Mork Lunde</title>
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+<link rel="stylesheet" href="/styles.css" />
+
+<script>
+  // Theme: localStorage > system preference > dark. Set before first paint.
+  (function () {
+    try {
+      var saved = localStorage.getItem("kml-theme");
+      var prefersLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
+      var theme = saved || (prefersLight ? "light" : "dark");
+      document.documentElement.setAttribute("data-theme", theme);
+    } catch (e) {
+      document.documentElement.setAttribute("data-theme", "dark");
+    }
+  })();
+</script>
+</head>
+<body>
+
+  <!-- Theme toggle: persistent, top-right -->
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme">
+    <span class="dot" aria-hidden="true"></span>
+    <span class="label" id="themeLabel">Light</span>
+  </button>
+
+  <main class="case">
+
+    <!-- Atmospheric blur in hero area -->
+    <div class="case-bg" aria-hidden="true"></div>
+
+    <div class="case-shell">
+
+      <!-- back to work, top-left -->
+      <a class="back-link" href="/index.html#work">
+        <span class="arr-back">←</span>
+        <span>Back to work</span>
+      </a>
+
+      <!-- ===== Header block ===== -->
+      <header class="case-header">
+        <span class="case-num" aria-hidden="true">03</span>
+        <h1 class="case-title">Killing my own work on an award-winning game</h1>
+        <p class="case-frame">
+          Gameplay programmer at Hyper Games on Mørkredd, a physics-based co-op puzzle game that won Game of the Year, Best Game Design, and Best Art at the Nordic Game Awards 2021. My job was a mix of gameplay code, console porting, broader QA, and one experiment that didn't ship.
+        </p>
+      </header>
+
+      <!-- ===== § What the game is ===== -->
+      <section class="case-section">
+        <span class="case-eyebrow">— What the game is</span>
+        <h2 class="case-h2">What the game is</h2>
+        <div class="case-prose">
+          <p>
+            Mørkredd is a couch co-op puzzle game where two players push a glowing orb through a dark world. The orb is the only light source. The shadow it casts behind each player kills the other if they step into it. Sixty puzzles across a few hours of play, designed co-op from the first prototype.
+          </p>
+          <p>
+            The mechanic is hard to describe and obvious in five seconds of play. That's the design win, and it's not mine to claim. I shipped code, fixed bugs, ported the game to iOS and iPad for one of Apple Arcade's launch titles, and ran a one-month experiment to see if online multiplayer was possible.
+          </p>
+          <p>
+            The experiment is the interesting part.
+          </p>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- ===== Reserved slot: gameplay screenshot ===== -->
+    <div class="case-shell-wide">
+      <figure class="case-placeholder" aria-label="Gameplay screenshot placeholder" style="min-height: 320px;">
+        <span class="case-placeholder-label">— Gameplay screenshot (placeholder)</span>
+        <span class="case-placeholder-hint">
+          The glowing orb between two players, the killing shadow behind. Key art or in-game capture.
+        </span>
+      </figure>
+    </div>
+
+    <div class="case-shell">
+
+      <!-- ===== § The online co-op prototype ===== -->
+      <section class="case-section">
+        <span class="case-eyebrow">— The online co-op prototype</span>
+        <h2 class="case-h2">The online co-op prototype</h2>
+        <div class="case-prose">
+          <p>
+            About a year into development, we wanted to know if Mørkredd could support online co-op in addition to couch co-op. The pitch was obvious: more reach, more flexibility, friends playing together without being in the same room. I got a month to find out.
+          </p>
+          <p>
+            I built a host-client setup in Unity using Photon. One player creates a session with a code, the other joins. Both players in the same scene, both pushing the orb, both casting shadows. The minimum playable thing.
+          </p>
+          <p>
+            It got to "you can run around together and push the ball." That sounds like success. It wasn't.
+          </p>
+        </div>
+      </section>
+
+      <!-- ===== § Why it didn't ship ===== -->
+      <section class="case-section">
+        <span class="case-eyebrow">— Why it didn't ship</span>
+        <h2 class="case-h2">Why it didn't ship</h2>
+        <div class="case-prose">
+          <p>
+            The orb is physics-based. Every interaction with it is a physics interaction. Players push it, it rolls, it bumps into geometry, it falls off ledges, it collides with creatures. The shadow it casts depends on its exact position frame to frame. The shadow killing players depends on millimeter-precise positions of two characters and the orb relative to a light source that's moving.
+          </p>
+        </div>
+      </section>
+
+    </div>
+
+    <!-- ===== Pull quote (breaks out wider than the body column) ===== -->
+    <div class="case-shell-wide">
+      <blockquote class="case-pullquote">
+        The work taught me that some features aren't expensive because they're hard. They're expensive because they're late.
+      </blockquote>
+    </div>
+
+    <div class="case-shell">
+
+      <section class="case-section" style="margin-top: 0;">
+        <div class="case-prose">
+          <p>
+            Synchronizing all of that over a network, in a way that felt tight in both clients, would have required rewriting the physics layer to be deterministic, or building a server-authoritative model with prediction and rollback for the players. The existing codebase was written for one machine, one set of physics ticks, one source of truth. Converting it would have been a much larger project than the multiplayer feature itself.
+          </p>
+          <p>
+            The demo I built worked just well enough to be misleading. Movement synced. Pushing the orb mostly synced. But shadows desynced subtly between the two clients, and "subtly" matters when subtle equals death. One client would see a player safely in light. The other client would see the same player in shadow. The host would call them dead. The other player would have no idea why.
+          </p>
+          <p>
+            We killed the feature.
+          </p>
+        </div>
+      </section>
+
+      <!-- ===== § What I took from it ===== -->
+      <section class="case-section">
+        <span class="case-eyebrow">— What I took from it</span>
+        <h2 class="case-h2">What I took from it</h2>
+        <div class="case-prose">
+          <p>
+            The lesson sounds obvious in retrospect: scope multiplayer at the start, or don't scope it at all. Building a single-player game and adding multiplayer later isn't a feature, it's a rewrite. If we'd known co-op online was a goal from the first prototype, the physics layer and the synchronization model would have been designed around it. Adding it on top of code that assumed one machine was a wall we couldn't climb in a month.
+          </p>
+          <p>
+            That sounds like a critique of the team. It isn't. Studios make these calls under real constraints, and the right call for Mørkredd was to stay focused on couch co-op, which is what made it great. The lesson was for me. Every interactive system I've worked on since, from Unity simulation modules to AI agent pipelines, I've asked the same question earlier: what's the deployment shape this needs to support, and is the architecture written to support it? Cheaper to scope wide and narrow later than to scope narrow and widen later.
+          </p>
+          <p>
+            I also learned to recognize the shape of a prototype that's working just well enough to lie to you. The demo ran. People could play together. The bugs felt like polish issues. They weren't. They were a load-bearing wall that wouldn't hold. Calling that out and shipping the conclusion ("this doesn't ship") was harder than calling it out and asking for more time. But it was the right call.
+          </p>
+        </div>
+      </section>
+
+      <!-- ===== § The other work ===== -->
+      <section class="case-section">
+        <span class="case-eyebrow">— The other work</span>
+        <h2 class="case-h2">The other work</h2>
+        <div class="case-prose">
+          <p>
+            Beyond the experiment, I shipped gameplay code, ran broader QA across the team, and ported the game to iOS and iPad for Apple Arcade's launch. Touch-screen porting of a couch co-op game designed for controllers was its own problem: how do you map two-player input to a device that only has one player's hands on it? The answer wasn't elegant, but it shipped.
+          </p>
+          <p>
+            I also helped Krillbite, the studio that made Mosaic, with their tie-in app Mosaic: BlipBlop, which existed both as a real downloadable iOS and Android app and as a diegetic app inside the Mosaic game world. That work was through Hyper while we shared a floor with Krillbite.
+          </p>
+        </div>
+      </section>
+
+      <!-- ===== Tags ===== -->
+      <div class="case-tags">
+        <span class="tag tag-orange">Unity</span>
+        <span class="tag tag-orange">C#</span>
+        <span class="tag tag-orange">gameplay programming</span>
+        <span class="tag tag-orange">multiplayer prototyping</span>
+        <span class="tag tag-violet">Photon</span>
+        <span class="tag tag-violet">physics</span>
+        <span class="tag tag-violet">console porting</span>
+        <span class="tag tag-violet">iOS</span>
+        <span class="tag tag-orange">Apple Arcade</span>
+      </div>
+
+      <!-- ===== Bottom back link ===== -->
+      <div class="case-bottom-nav">
+        <a class="back-link" href="/index.html#work">
+          <span class="arr-back">←</span>
+          <span>Back to work</span>
+        </a>
+      </div>
+
+    </div>
+
+  </main>
+
+  <script>
+    // Theme toggle wiring
+    (function () {
+      var btn = document.getElementById("themeToggle");
+      var label = document.getElementById("themeLabel");
+
+      function syncLabel() {
+        var theme = document.documentElement.getAttribute("data-theme") || "dark";
+        label.textContent = theme === "dark" ? "Light" : "Dark";
+      }
+      syncLabel();
+
+      btn.addEventListener("click", function () {
+        var current = document.documentElement.getAttribute("data-theme") || "dark";
+        var next = current === "dark" ? "light" : "dark";
+        document.documentElement.setAttribute("data-theme", next);
+        try { localStorage.setItem("kml-theme", next); } catch (e) {}
+        syncLabel();
+      });
+    })();
+  </script>
+
+</body>
+</html>

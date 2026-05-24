@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>About — Kasper Mork Lunde</title>
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml" />
+<link rel="stylesheet" href="/styles.css" />
+
+<script>
+  // Theme: localStorage > system preference > dark.
+  // Set BEFORE first paint to avoid a flash.
+  (function () {
+    try {
+      var saved = localStorage.getItem("kml-theme");
+      var prefersLight = window.matchMedia && window.matchMedia("(prefers-color-scheme: light)").matches;
+      var theme = saved || (prefersLight ? "light" : "dark");
+      document.documentElement.setAttribute("data-theme", theme);
+    } catch (e) {
+      document.documentElement.setAttribute("data-theme", "dark");
+    }
+  })();
+</script>
+</head>
+<body>
+
+  <!-- Theme toggle: persistent, top-right -->
+  <button class="theme-toggle" id="themeToggle" aria-label="Toggle color theme">
+    <span class="dot" aria-hidden="true"></span>
+    <span class="label" id="themeLabel">Light</span>
+  </button>
+
+  <main class="about-page">
+
+    <!-- Atmospheric blur, top-right of hero area -->
+    <div class="about-bg" aria-hidden="true"></div>
+
+    <div class="about-shell">
+
+      <!-- Back to home, top-left -->
+      <a class="back-link" href="/">
+        <span class="arr-back">←</span>
+        <span>Back to home</span>
+      </a>
+
+      <span class="sec-label">— About</span>
+
+      <h1 class="about-heading">About</h1>
+
+      <div class="about-prose">
+        <p>
+          I design interactive systems that <em>respond to humans.</em> That's the through-line under everything: gameplay programming on award-winning games at Hyper Games, training simulations and dialogue logic at Attensi, AI agents that have to feel like specific people.
+        </p>
+
+        <p>
+          The path looks linear in hindsight, but each step felt like a side step at the time. What connects them isn't the technology. It's the question. How do you make a system <em>feel alive to the person interacting with it?</em> A branching dialogue with hidden state and an AI agent with personality sliders are two answers to the same question, separated by a decade and a different stack.
+        </p>
+
+        <p>
+          I prefer shipping a rough thing and learning from it to specifying a perfect thing and shipping something nobody needed. That preference has cost me. The Mørkredd multiplayer prototype taught me that some decisions can't be iterated into and have to be made at the scope level or not at all. I scope load-bearing things harder now. Both directions of that lesson matter.
+        </p>
+
+        <p>
+          Outside work, I live in Oslo with my partner and a Bernese Mountain Dog named Chili who weighs forty-five kilos and is convinced he's small enough to sit on anyone's lap. I'm originally from Harstad, far enough north that the aurora was a normal weather event and far enough away from anything that I learned how to occupy myself. I still do. I spend more time than is probably reasonable at Tilt, the local pinball bar, and I'd like to own a machine someday. I represented Narvik on NRK's Valgspillet 2019, a four-hour primetime broadcast turning the Norwegian municipal election into a Cities: Skylines competition. I make small games when I have time. Right now I'm building Questboard, which you'll find in the case studies, and planning a keyboard-learning app where you plug an actual keyboard into your phone and play your way through sheet music.
+        </p>
+
+        <p>
+          If something here resonates, my details are below. I'm not aggressively looking, but I'm open to good conversations, especially around AI design, game design, product design, and the territory between them.
+        </p>
+      </div>
+
+      <p class="signoff">— Kasper</p>
+
+      <div class="signoff-contact">
+        <div class="contact-list">
+          <a class="contact-link" href="mailto:kasperml@hotmail.com">
+            <span class="idx">01</span>
+            <span>Email</span>
+            <span class="arr">→</span>
+          </a>
+          <a class="contact-link" href="https://linkedin.com/in/kasperlunde">
+            <span class="idx">02</span>
+            <span>LinkedIn</span>
+            <span class="arr">→</span>
+          </a>
+          <a class="contact-link" href="https://github.com/Kaslun">
+            <span class="idx">03</span>
+            <span>GitHub</span>
+            <span class="arr">→</span>
+          </a>
+          <a class="contact-link" href="/cv/Kasper-Mork-Lunde-CV-AI-Branded.pdf">
+            <span class="idx">04</span>
+            <span>CV (PDF)</span>
+            <span class="arr">→</span>
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <script>
+    // Theme toggle wiring
+    (function () {
+      var btn = document.getElementById("themeToggle");
+      var label = document.getElementById("themeLabel");
+
+      function syncLabel() {
+        var theme = document.documentElement.getAttribute("data-theme") || "dark";
+        label.textContent = theme === "dark" ? "Light" : "Dark";
+      }
+      syncLabel();
+
+      btn.addEventListener("click", function () {
+        var current = document.documentElement.getAttribute("data-theme") || "dark";
+        var next = current === "dark" ? "light" : "dark";
+        document.documentElement.setAttribute("data-theme", next);
+        try { localStorage.setItem("kml-theme", next); } catch (e) {}
+        syncLabel();
+      });
+    })();
+  </script>
+
+</body>
+</html>

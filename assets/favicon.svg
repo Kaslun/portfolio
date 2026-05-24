@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" stroke="#FF6B35">
+  <!-- K wordmark — italic, Fraunces-flavored. Distinguishing feature: descender swash on the lower-right leg. -->
+  <line x1="9.5" y1="4.5" x2="16.5" y2="4.5" stroke-width="1.4"/>
+  <line x1="5.5" y1="27.5" x2="12.5" y2="27.5" stroke-width="1.4"/>
+  <line x1="13" y1="4.5" x2="9" y2="27.5" stroke-width="2.8"/>
+  <line x1="11.5" y1="14.5" x2="23.5" y2="4.5" stroke-width="2.4"/>
+  <path d="M 11.2 15.5 L 20.5 25.5 Q 23.5 29.5 27 30" stroke-width="2.4" stroke-linecap="round" fill="none"/>
+</svg>
