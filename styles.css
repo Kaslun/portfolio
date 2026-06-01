@@ -697,6 +697,32 @@ footer {
   text-wrap: pretty;
 }
 
+/* Real image figures (replace placeholder blocks once assets land) */
+.case-figure {
+  margin: 56px auto;
+}
+.case-figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  border: 1px solid var(--border);
+  background: var(--bg-card);
+}
+.case-figcaption {
+  display: block;
+  margin-top: 16px;
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--fg-muted);
+  text-align: center;
+}
+@media (max-width: 768px) {
+  .case-figure { margin: 40px auto; }
+}
+
 /* Tags row */
 .case-tags {
   margin-top: 96px;

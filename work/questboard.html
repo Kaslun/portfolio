@@ -153,11 +153,9 @@
 
     <!-- ===== Reserved slot: architecture diagram ===== -->
     <div class="case-shell-wide">
-      <figure class="case-placeholder" aria-label="Architecture diagram placeholder">
-        <span class="case-placeholder-label">— Architecture diagram (placeholder)</span>
-        <span class="case-placeholder-hint">
-          scrape → filter → dedupe → score → draft. Daily run, profile-aware, with prompt caching on the CV step.
-        </span>
+      <figure class="case-figure">
+        <img src="../assets/work/questboard-architecture.png" alt="Questboard system architecture diagram: 116 studios feed a Python scraper, which writes to a Supabase Postgres database; the Anthropic API (Claude Haiku for scoring, Sonnet for letter drafting) sits between ingest and persistence; a Next.js app reads and writes from the database." loading="lazy">
+        <figcaption class="case-figcaption">— Daily pipeline architecture</figcaption>
       </figure>
     </div>
 
@@ -184,11 +182,9 @@
 
     <!-- ===== Reserved slot: dashboard screenshot ===== -->
     <div class="case-shell-wide">
-      <figure class="case-placeholder" aria-label="Dashboard screenshot placeholder" style="min-height: 320px;">
-        <span class="case-placeholder-label">— Dashboard screenshot (placeholder)</span>
-        <span class="case-placeholder-hint">
-          The Next.js dashboard view. Daily scored list, profile filter, rationale column, status pills.
-        </span>
+      <figure class="case-figure">
+        <img src="../assets/work/questboard-dashboard.png" alt="Questboard dashboard showing Today's roles, a Daily 5 progress bar at 2 of 5, and filtered job tiles for a Systems Designer role at Aurora Works (score 95) and a Level Designer role at Mossgate Studio (score 81)." loading="lazy">
+        <figcaption class="case-figcaption">— Today's roles · feed view</figcaption>
       </figure>
     </div>
 
